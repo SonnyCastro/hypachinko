@@ -1,0 +1,168 @@
+---
+description: Hypachinko dApp development rules with Figma integration
+globs:
+alwaysApply: true
+---
+
+# Hypachinko dApp Development Rules
+
+## Figma Dev Mode MCP Integration
+
+- The Figma Dev Mode MCP Server provides an assets endpoint which can serve image and SVG assets
+- IMPORTANT: If the Figma Dev Mode MCP Server returns a localhost source for an image or an SVG, use that image or SVG source directly
+- IMPORTANT: DO NOT import/add new icon packages, all the assets should be in the Figma payload
+- IMPORTANT: do NOT use or create placeholders if a localhost source is provided
+- Use `get_code` tool for React + Tailwind structured representation
+- Use `get_variable_defs` tool to extract design tokens (colors, spacing, typography)
+- Use `get_image` tool for screenshots when layout fidelity is crucial
+- Break down large selections into smaller components for better results
+- Use semantic layer names from Figma (e.g., `CardContainer`, not `Group 5`)
+
+## Project Structure & Organization
+
+- Use Next.js 15 with app router structure
+- Implement TypeScript for type safety
+- Use Tailwind CSS 4 for styling
+- Follow modern React patterns with server and client components
+
+### Folder Structure
+
+```
+src/
+├── app/                    # App router pages and layouts
+├── components/             # Reusable UI components
+│   ├── ui/                # Basic UI components (buttons, inputs, etc.)
+│   ├── layout/            # Layout components (header, footer, sidebar)
+│   ├── features/          # Feature-specific components
+│   ├── wallet/            # Wallet connection components
+│   └── common/            # Shared components used across features
+├── lib/                   # Utility functions and helpers
+├── styles/                # Global styles and CSS variables
+├── types/                 # TypeScript type definitions
+└── constants/             # App constants and configuration
+```
+
+## DRY (Don't Repeat Yourself) Principles
+
+- Create reusable components for repeated UI patterns
+- Extract common logic into custom hooks
+- Use utility functions for repeated operations
+- Create shared constants for repeated values
+- Implement consistent naming conventions across components
+- Avoid duplicating styles - use Tailwind classes consistently
+
+## Styling & Design System
+
+- Create a centralized design system with CSS variables
+- Extract Figma design tokens into CSS custom properties
+- Use consistent spacing, typography, and color scales
+- Implement responsive design patterns
+- Support dark mode with CSS variables
+
+### CSS Variables Structure
+
+```css
+:root {
+  /* Colors */
+  --color-primary: #...;
+  --color-secondary: #...;
+  --color-accent: #...;
+
+  /* Typography */
+  --font-family-primary: "...";
+  --font-family-secondary: "...";
+  --font-size-xs: ...;
+  --font-size-sm: ...;
+  --font-size-base: ...;
+  --font-size-lg: ...;
+  --font-size-xl: ...;
+
+  /* Spacing */
+  --spacing-xs: ...;
+  --spacing-sm: ...;
+  --spacing-md: ...;
+  --spacing-lg: ...;
+  --spacing-xl: ...;
+
+  /* Border radius */
+  --radius-sm: ...;
+  --radius-md: ...;
+  --radius-lg: ...;
+}
+```
+
+## Component Organization
+
+- Group related components in feature-specific folders
+- Use index files for clean imports
+- Create component interfaces with proper TypeScript types
+- Implement consistent prop patterns across components
+- Use composition over inheritance for component relationships
+
+### Component Structure Example
+
+```typescript
+// src/components/ui/Button/index.tsx
+interface ButtonProps {
+  variant?: "primary" | "secondary" | "outline"
+  size?: "sm" | "md" | "lg"
+  children: React.ReactNode
+  onClick?: () => void
+  disabled?: boolean
+}
+
+export const Button = ({
+  variant = "primary",
+  size = "md",
+  children,
+  ...props
+}: ButtonProps) => {
+  // Component implementation
+}
+```
+
+## Code Quality & Best Practices
+
+- Use meaningful component and variable names
+- Add proper TypeScript types for all props and functions
+- Include error handling for API calls and user interactions
+- Optimize for performance with proper loading states and memoization
+- Add JSDoc comments for complex logic and components
+- Use ESLint and Prettier for consistent code formatting
+- Implement proper error boundaries for React components
+
+## Font Management
+
+- Load fonts efficiently using Next.js font optimization
+- Create font utility classes for consistent typography
+- Use CSS variables for font families and sizes
+- Implement proper font fallbacks
+- Optimize font loading for performance
+
+## dApp Specific Requirements
+
+- Implement wallet connection functionality with proper error handling
+- Create modular feature components with clear separation of concerns
+- Add proper state management (use React Context or state management library)
+- Ensure blockchain integration readiness with proper TypeScript types
+- Focus on user experience with smooth interactions and loading states
+- Implement proper form validation and user feedback
+- Add accessibility features (ARIA labels, keyboard navigation)
+
+## Performance Optimization
+
+- Use React.memo for expensive components
+- Implement proper code splitting with dynamic imports
+- Optimize images and assets loading
+- Use proper caching strategies
+- Minimize bundle size with tree shaking
+- Implement proper loading and error states
+
+## Figma Integration Best Practices
+
+- Use Auto layout in Figma to communicate responsive intent
+- Name layers semantically for better code generation
+- Use variables in Figma for consistent design tokens
+- Link components to codebase via Code Connect when possible
+- Use annotations and dev resources for complex interactions
+- Break down large selections into smaller, manageable components

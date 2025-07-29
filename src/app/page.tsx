@@ -1,103 +1,234 @@
-import Image from "next/image";
+"use client"
+
+import { useMemo } from "react"
+import { ASSETS } from "@/constants/assets"
+import { useGameState } from "@/hooks/useGameState"
+import {
+  TokenSelector,
+  GameInterface,
+  UpForGrabsDisplay,
+  RecentActivityFeed,
+  HowItWorksSection,
+  HypachinkoSection,
+} from "@/components/features"
+import { Footer } from "@/components/layout"
 
 export default function Home() {
-  return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  // Game state management with custom hook
+  const {
+    selectedPercentage,
+    ballCount,
+    selectedToken,
+    setPercentage: handlePercentageSelect,
+    setBallCount: handleBallCountChange,
+    setToken: handleTokenSelect,
+    buyBalls: handleBuyBalls,
+  } = useGameState()
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
+  // Memoized static data
+  const tokens = useMemo(
+    () => [
+      { id: "usdt0", name: "usdt0", icon: ASSETS.icons.usdt },
+      { id: "hype", name: "hype", icon: ASSETS.icons.hyperliquidAlt },
+      { id: "tkn1", name: "tkn", icon: ASSETS.icons.pokerChipBlue },
+      { id: "tkn2", name: "tkn", icon: ASSETS.icons.pokerChipBlue },
+    ],
+    []
+  )
+
+  // Memoized tokens array with active state
+  const tokensWithActiveState = useMemo(() => {
+    return tokens.map((token) => ({
+      ...token,
+      isActive: token.id === selectedToken,
+    }))
+  }, [tokens, selectedToken])
+
+  const tokenInfo = useMemo(
+    () => ({
+      icon: ASSETS.icons.usdt,
+      name: "USDT0",
+      rate: "1 USDT0 = 1 BALL",
+      price: "$0.99",
+    }),
+    []
+  )
+
+  const activities = useMemo(
+    () => [
+      {
+        id: "1",
+        address: "0xfr...52ga",
+        action: "buy" as const,
+        amount: "50,000 balls",
+        tokenIcon: ASSETS.icons.usdt,
+      },
+      {
+        id: "2",
+        address: "0xab...1234",
+        action: "buy" as const,
+        amount: "50,000 balls",
+        tokenIcon: ASSETS.icons.usdt,
+      },
+      {
+        id: "3",
+        address: "0xab...1234",
+        action: "buy" as const,
+        amount: "50,000 balls",
+        tokenIcon: ASSETS.icons.usdt,
+      },
+      {
+        id: "4",
+        address: "0xab...1234",
+        action: "buy" as const,
+        amount: "50,000 balls",
+        tokenIcon: ASSETS.icons.usdt,
+      },
+      {
+        id: "5",
+        address: "0xfr...52ga",
+        action: "won" as const,
+        amount: "$50,000",
+        tokenIcon: ASSETS.icons.usdt,
+        isWinner: true,
+      },
+    ],
+    []
+  )
+
+  const tokenCards = [
+    {
+      token: { name: "USDT0", price: "$0.99", icon: ASSETS.icons.usdt },
+      jackpotAmount: "$50,000",
+      borderColor: "border-[#00b988]",
+      bgColor: "bg-[#00b988]",
+    },
+    {
+      token: { name: "TOKEN", price: "$16.99", icon: ASSETS.icons.sphere },
+      jackpotAmount: "$50,000",
+      borderColor: "border-[#b5f1ff]",
+      bgColor: "bg-[#b5f1ff]",
+    },
+    {
+      token: { name: "HYPE", price: "$47.82", icon: ASSETS.icons.usdt },
+      jackpotAmount: "$50,000",
+      borderColor: "border-[#50ffd6]",
+      bgColor: "bg-[#50ffd6]",
+    },
+    {
+      token: { name: "TOKEN", price: "$2.99", icon: ASSETS.icons.sphere },
+      jackpotAmount: "$50,000",
+      borderColor: "border-[#e0bdff]",
+      bgColor: "bg-[#e0bdff]",
+    },
+  ]
+
+  const drawTimers = [
+    {
+      token: { name: "USDT0", icon: ASSETS.icons.usdt },
+      timeLeft: "07:35:00",
+      progressWidth: "454px",
+      progressColor: "#00b988",
+      alarmIcon: ASSETS.icons.alarm,
+    },
+    {
+      token: { name: "HYPE", icon: ASSETS.icons.usdt },
+      timeLeft: "22:32:00",
+      progressWidth: "530px",
+      progressColor: "#50ffd6",
+      alarmIcon: ASSETS.icons.alarm,
+    },
+    {
+      token: { name: "TOKEN", icon: ASSETS.icons.sphere },
+      timeLeft: "01:35:15",
+      progressWidth: "184px",
+      progressColor: "#b5f1ff",
+      alarmIcon: ASSETS.icons.alarm,
+    },
+    {
+      token: { name: "TOKEN", icon: ASSETS.icons.sphere },
+      timeLeft: "00:35:00",
+      progressWidth: "78px",
+      progressColor: "#e0bdff",
+      alarmIcon: ASSETS.icons.alarm,
+    },
+  ]
+
+  const statistics = [
+    {
+      icon: ASSETS.icons.sphere,
+      title: "Total Balls in Play",
+      value: "380,000",
+    },
+    { icon: ASSETS.icons.alarm, title: "Next Draw In", value: "07:35:24" },
+    { icon: ASSETS.icons.trophy, title: "Winners This Week", value: "342" },
+  ]
+
+  return (
+    <div className='bg-[var(--color-figma-dark-600)] min-h-screen flex flex-col items-center overflow-x-hidden'>
+      <div className='w-full max-w-[1728px]'>
+        {/* Hero Section */}
+        <div className='w-full relative'>
+          {/* Navbar spacer */}
+          <div className='h-20 w-full' />
+
+          {/* Hero content */}
+          <div className='flex flex-col gap-[38px] h-[877px] items-center justify-center relative w-full px-4'>
+            {/* Mascot character */}
+            <div
+              className='absolute left-[-60px] w-[800px] h-[800px] top-[155px] bg-center bg-cover bg-no-repeat'
+              style={{
+                backgroundImage: `url('${ASSETS.images.mascot}')`,
+              }}
             />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+
+            {/* Main title */}
+            <div className='text-bagel text-8xl leading-[1.1] text-[var(--color-figma-green-400)] text-center relative z-10'>
+              <p className='block mb-0'>CASH IN!</p>
+              <p className='block'>CRASH OUT.</p>
+            </div>
+
+            {/* Game interface */}
+            <div className='flex flex-col gap-2.5 items-start justify-start w-full max-w-[544px] relative z-10'>
+              {/* Token selection buttons */}
+              <TokenSelector
+                tokens={tokensWithActiveState}
+                onTokenSelect={handleTokenSelect}
+              />
+
+              {/* Main game interface */}
+              <GameInterface
+                jackpotAmount='$50,000'
+                timeLeft='07:35:24'
+                tokenInfo={tokenInfo}
+                selectedPercentage={selectedPercentage}
+                ballCount={ballCount}
+                onInfoClick={() => console.log("Info clicked")}
+                onBuyBalls={handleBuyBalls}
+                onPercentageSelect={handlePercentageSelect}
+                onBallCountChange={handleBallCountChange}
+              />
+            </div>
+
+            {/* Purchase history sidebar */}
+            <div className='absolute right-4 top-[156px] w-64 z-10'>
+              <RecentActivityFeed activities={activities} />
+            </div>
+          </div>
+
+          {/* UP FOR GRABS section */}
+          <UpForGrabsDisplay prizeAmount='$300,000' count={8} />
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+
+        {/* How it works section */}
+        <HowItWorksSection tokenCards={tokenCards} drawTimers={drawTimers} />
+
+        {/* Hypachinko section */}
+        <HypachinkoSection statistics={statistics} />
+
+        {/* Footer */}
+        <Footer />
+      </div>
     </div>
-  );
+  )
 }

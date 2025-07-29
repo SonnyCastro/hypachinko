@@ -1,0 +1,80 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# UI Components & Design System Rules
+
+## Design System Principles
+- Use CSS variables from `src/styles/design-tokens.css` for all colors, spacing, typography
+- Follow the established color palette and spacing scale
+- Maintain consistent typography hierarchy
+- Use semantic HTML and proper accessibility attributes
+
+## Component Organization
+- Reuse existing UI components from `/src/components/ui` when possible
+- Create new components by orchestrating existing UI components
+- Place new components in appropriate feature folders
+- Use index files for clean imports
+
+## Color Usage
+- **Primary**: Use `var(--color-primary)` for main actions and branding
+- **Accent Green**: Use `var(--color-accent-green)` for success states and money displays
+- **Accent Red**: Use `var(--color-accent-red)` for errors and destructive actions
+- **Accent Yellow**: Use `var(--color-accent-yellow)` for warnings and highlights
+- **Background**: Use `var(--color-background)` for main backgrounds
+- **Surface**: Use `var(--color-surface)` for cards and elevated elements
+
+## Typography
+- **Display**: Use `.text-display` for large headlines (CASH IN! CRASH OUT.)
+- **Heading**: Use `.text-heading` for section titles
+- **Body**: Use `.text-body` for regular text content
+- **Mono**: Use `.text-mono` for code, numbers, and technical content
+
+## Spacing
+- Use the spacing scale: `var(--spacing-1)` through `var(--spacing-32)`
+- Prefer consistent spacing patterns (4px, 8px, 16px, 24px, 32px)
+- Use `var(--container-padding)` for page-level padding
+
+## Component Patterns
+- Use `cn()` utility for conditional class merging
+- Implement proper TypeScript interfaces for all props
+- Add proper ARIA labels and accessibility features
+- Use semantic HTML elements (button, nav, main, section, etc.)
+
+## Figma Integration
+- Extract exact colors, spacing, and typography from Figma designs
+- Use the MCP server to get pixel-perfect measurements
+- Maintain design fidelity while ensuring responsive behavior
+- Ask for clarification when design intent is unclear
+
+## Responsive Design
+- Mobile-first approach with responsive breakpoints
+- Use Tailwind's responsive prefixes (sm:, md:, lg:, xl:)
+- Test components at different screen sizes
+- Ensure touch targets are at least 44px on mobile
+
+## Animation & Transitions
+- Use CSS variables for transition durations
+- Prefer subtle animations that enhance UX
+- Use `var(--transition-normal)` for most interactions
+- Implement loading states and skeleton screens
+
+## Accessibility
+- Use proper heading hierarchy (h1, h2, h3, etc.)
+- Add alt text for images and icons
+- Ensure sufficient color contrast (4.5:1 minimum)
+- Support keyboard navigation
+- Add focus indicators using `.focus-ring`
+
+## Error Handling
+- Show user-friendly error messages
+- Use `var(--color-accent-red)` for error states
+- Provide clear next steps for users
+- Implement proper form validation
+
+## Performance
+- Use React.memo for expensive components
+- Optimize images and assets
+- Implement proper loading states
+- Use code splitting for large components

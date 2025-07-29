@@ -1,0 +1,37 @@
+/* Design Tokens for Hypachinko dApp */
+/* Custom variables that extend Tailwind CSS */
+
+:root {
+  /* Figma Design Colors - Custom brand colors */
+  --color-figma-green-400: #3fefc0;
+  --color-figma-green-200: #85ffde;
+  --color-figma-dark-600: #1b0e18;
+  --color-figma-dark-200: #2b1a27;
+  --color-figma-dark-a: #1b0e18e5;
+  --color-figma-yellow-200: #fbd2ff;
+  
+  /* Custom Font Families */
+  --font-family-bagel: 'Bagel Fat One', cursive;
+  --font-family-instrument: 'Instrument Sans', sans-serif;
+}
+
+/* Custom Font Utility Classes */
+.text-bagel {
+  font-family: var(--font-family-bagel);
+  font-weight: 400;
+}
+
+.text-instrument {
+  font-family: var(--font-family-instrument);
+  font-weight: 400;
+}
+
+/* Animation keyframes */
+@keyframes scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.animate-scroll {
+  animation: scroll 20s linear infinite;
+} 
