@@ -24,5 +24,5 @@ export const validateBallCount = (count: number): number => {
 }
 
 export const isValidPercentage = (percentage: string): boolean => {
-  return PERCENTAGE_OPTIONS.includes(percentage as any)
+  return PERCENTAGE_OPTIONS.includes(percentage as typeof PERCENTAGE_OPTIONS[number])
 } 

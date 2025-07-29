@@ -51,7 +51,7 @@ export const useMachinesState = (machineIds: string[]) => {
   // Reset all machines
   const resetAllMachines = useCallback(() => {
     setMachineStates(initialStates)
-  }, [])
+  }, [initialStates])
 
   // Get total balls across all machines
   const getTotalBalls = useCallback(() => {

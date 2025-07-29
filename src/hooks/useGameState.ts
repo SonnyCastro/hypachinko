@@ -16,22 +16,18 @@ type GameAction =
 
 // Game state reducer
 const gameReducer = (state: GameState, action: GameAction): GameState => {
-  const gameLogic = useGameLogic()
-
   switch (action.type) {
     case 'SET_PERCENTAGE':
-      const percentageResult = gameLogic.handlePercentageSelect(action.payload)
       return {
         ...state,
-        selectedPercentage: percentageResult.percentage,
-        ballCount: percentageResult.ballCount
+        selectedPercentage: action.payload,
+        ballCount: 0 // Will be calculated in the hook
       }
     case 'SET_BALL_COUNT':
-      const ballCountResult = gameLogic.handleBallCountChange(action.payload)
       return {
         ...state,
-        ballCount: ballCountResult.ballCount,
-        selectedPercentage: ballCountResult.percentage
+        ballCount: action.payload,
+        selectedPercentage: '' // Clear percentage when manually entering
       }
     case 'SET_TOKEN':
       return {
@@ -57,14 +53,22 @@ export const useGameState = (initialState?: Partial<GameState>) => {
     ...initialState
   })
 
+  const gameLogic = useGameLogic()
+
   // Memoized action creators
   const setPercentage = useCallback((percentage: string) => {
-    dispatch({ type: 'SET_PERCENTAGE', payload: percentage })
-  }, [])
+    const result = gameLogic.handlePercentageSelect(percentage)
+    dispatch({ type: 'SET_PERCENTAGE', payload: result.percentage })
+    // Update ball count separately
+    dispatch({ type: 'SET_BALL_COUNT', payload: result.ballCount })
+  }, [gameLogic])
 
   const setBallCount = useCallback((count: number) => {
-    dispatch({ type: 'SET_BALL_COUNT', payload: count })
-  }, [])
+    const result = gameLogic.handleBallCountChange(count)
+    dispatch({ type: 'SET_BALL_COUNT', payload: result.ballCount })
+    // Update percentage separately
+    dispatch({ type: 'SET_PERCENTAGE', payload: result.percentage })
+  }, [gameLogic])
 
   const setToken = useCallback((tokenId: string) => {
     dispatch({ type: 'SET_TOKEN', payload: tokenId })
@@ -81,8 +85,6 @@ export const useGameState = (initialState?: Partial<GameState>) => {
       // e.g., call API, update wallet, etc.
     }
   }, [gameState.ballCount, gameState.selectedToken])
-
-  const gameLogic = useGameLogic()
 
   return {
     // State

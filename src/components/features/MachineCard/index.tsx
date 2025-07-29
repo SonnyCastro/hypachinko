@@ -14,7 +14,6 @@ interface MachineCardProps {
 }
 
 export function MachineCard({
-  machineId,
   selectedToken,
   selectedPercentage,
   ballCount,

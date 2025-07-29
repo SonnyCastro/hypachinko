@@ -3,13 +3,12 @@
 import { useMemo } from "react"
 import { ASSETS } from "@/constants/assets"
 import { useMachinesState } from "@/hooks/useMachinesState"
-import { MachineCard, UpForGrabsDisplay } from "@/components/features"
-import { Footer } from "@/components/layout"
+import { MachineCard } from "@/components/features"
 import { getTokenData } from "@/constants/tokenData"
 
 export default function MachinesPage() {
   // Machine IDs - easy to add/remove machines
-  const machineIds = ["usdt0", "hype", "tkn1", "tkn2"]
+  const machineIds = useMemo(() => ["usdt0", "hype", "tkn1", "tkn2"], [])
 
   // Use custom hook for machine state management
   const {
@@ -17,7 +16,6 @@ export default function MachinesPage() {
     handleMachinePercentageSelect,
     handleMachineBallCountChange,
     handleMachineBuyBalls,
-    getTotalBalls,
   } = useMachinesState(machineIds)
 
   // Memoized tokens array - using centralized tokenData
