@@ -3,6 +3,7 @@ export const ASSETS = {
   // Icons
   icons: {
     usdt: '/icons/usdt-icon.svg',
+    usdtBlack: '/icons/usdt-black.svg',
     sphere: '/icons/sphere-icon.svg',
     sphereSmall: '/icons/sphere-icon-small.svg',
     sphereAlt: '/icons/sphere-icon-alt.svg',
@@ -20,6 +21,7 @@ export const ASSETS = {
     hyperliquid: '/icons/hyperliquid-icon.svg',
     hyperliquidAlt: '/icons/hyperliquid-icon-alt.svg',
     ticket: '/icons/ticket-icon.svg',
+    gamepad: '/icons/device-gamepad.svg',
   },
 
   // Images

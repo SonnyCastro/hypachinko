@@ -13,10 +13,10 @@ interface HypachinkoSectionProps {
 
 export function HypachinkoSection({ statistics }: HypachinkoSectionProps) {
   return (
-    <section className='w-full flex flex-col items-center justify-center py-24'>
+    <section className='w-full flex flex-col items-center justify-center pb-20 pt-4 md:py-24'>
       <div className='max-w-[1280px] w-full px-4'>
         {/* Section Title */}
-        <div className='text-bagel text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl text-[var(--color-figma-green-400)] text-start mb-8 sm:mb-10 lg:mb-12'>
+        <div className='text-bagel text-5xl md:text-6xl lg:text-7xl text-[var(--color-figma-green-400)] text-start mb-8 sm:mb-10 lg:mb-12'>
           Hypachinko
         </div>
 

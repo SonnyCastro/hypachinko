@@ -8,8 +8,19 @@
   --color-figma-dark-600: #1b0e18;
   --color-figma-dark-200: #2b1a27;
   --color-figma-dark-a: #1b0e18e5;
-  --color-figma-yellow-200: #fbd2ff;
-  
+  --color-figma-yellow-200: #ffef0a;
+
+  /* Pink color system */
+  --color-pink-800: #861E90;
+  --color-pink-400: #F8AAFF;
+  --color-pink-200: #FBD2FF;
+
+  /* Light strip colors */
+  --color-light-active: #3fefc0;
+  --color-light-inactive: #3fefc0;
+  --color-light-purple: #a855f7;
+  --color-light-blue: #3b82f6;
+
   /* Custom Font Families */
   --font-family-bagel: 'Bagel Fat One', cursive;
   --font-family-instrument: 'Instrument Sans', sans-serif;
@@ -26,12 +37,29 @@
   font-weight: 400;
 }
 
+/* MAX button utility class */
+.text-max-button {
+  color: var(--color-pink-800);
+  text-align: center;
+  font-family: var(--font-family-instrument);
+  font-size: 1.25rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 110%;
+  text-transform: uppercase;
+}
+
 /* Animation keyframes */
 @keyframes scroll {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
 }
 
 .animate-scroll {
   animation: scroll 20s linear infinite;
-} 
+}

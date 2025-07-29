@@ -1,6 +1,7 @@
 "use client"
 
 import React from "react"
+import { TokenButton } from "../../common/TokenButton"
 
 interface TokenSelectorProps {
   tokens: Array<{
@@ -22,38 +23,13 @@ export function TokenSelector({ tokens, onTokenSelect }: TokenSelectorProps) {
       {tokens.map((token) => {
         const isActive = token.isActive || false
         return (
-          <button
+          <TokenButton
             key={token.id}
+            text={token.name}
+            icon={token.icon}
+            isActive={isActive}
             onClick={() => handleTokenSelect(token.id)}
-            className={`flex flex-row gap-1 h-12 items-center justify-start p-2 rounded-[100px] w-[130px] transition-colors ${
-              isActive
-                ? "bg-[var(--color-figma-green-400)]"
-                : "border border-[rgba(63,239,192,0.04)]"
-            }`}
-          >
-            <div
-              className={`w-8 h-8 relative ${
-                isActive
-                  ? "bg-[var(--color-figma-dark-600)] rounded-full p-1"
-                  : ""
-              }`}
-            >
-              <img
-                src={token.icon}
-                alt={token.name}
-                className='w-full h-full'
-              />
-            </div>
-            <div
-              className={`text-instrument font-normal text-[20px] text-center uppercase ${
-                isActive
-                  ? "text-[var(--color-figma-dark-600)]"
-                  : "text-[var(--color-figma-green-400)]"
-              }`}
-            >
-              {token.name}
-            </div>
-          </button>
+          />
         )
       })}
     </div>

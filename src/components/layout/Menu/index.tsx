@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { cn } from "@/lib/utils"
 import { truncateAddress } from "@/lib/utils"
 import type { WalletConnection } from "@/types"
@@ -18,18 +18,57 @@ interface BtnTextProps {
 
 function BtnText({ text, isActive = false, onClick }: BtnTextProps) {
   return (
+    <div className="flex flex-row gap-2.5 items-center justify-center px-2 py-1 relative rounded-[100px]">
+      <div
+        className="text-instrument font-normal text-[16px] leading-[1.1] text-center text-[var(--color-figma-green-400)] text-nowrap"
+        style={{ fontVariationSettings: "'wdth' 100" }}
+      >
+        <button onClick={onClick} className="whitespace-pre">
+          {text}
+        </button>
+      </div>
+    </div>
+  )
+}
+
+interface BtnIcontextProps {
+  text: string
+  leftIcon?: React.ReactNode
+  onClick?: () => void
+}
+
+function BtnIcontext({ text, leftIcon, onClick }: BtnIcontextProps) {
+  return (
     <button
       onClick={onClick}
-      className={cn(
-        "flex items-center justify-center px-2 py-1 rounded-[100px] transition-colors",
-        "text-instrument font-normal text-[16px] leading-[1.1] text-center",
-        isActive
-          ? "text-[var(--color-figma-green-400)] bg-[var(--color-figma-dark-600)]"
-          : "text-[var(--color-figma-green-400)] hover:bg-[var(--color-figma-dark-600)]/20"
-      )}
+      className="bg-[var(--color-figma-green-400)] relative rounded-[100px] shrink-0"
+      style={{
+        boxShadow: '0px 4px 4px 0px inset rgba(255,255,255,0.5), 0px -4px 4px 0px inset rgba(0,0,0,0.25)',
+        border: '1px solid var(--color-figma-green-200)',
+      }}
     >
-      <span className='whitespace-nowrap'>{text}</span>
+      <div className="flex flex-row gap-2 items-center justify-center px-4 py-3">
+        {leftIcon && <div className="w-6 h-6 relative">{leftIcon}</div>}
+        <div
+          className="text-instrument font-normal text-[16px] text-[var(--color-figma-dark-600)] text-center leading-[1.1] text-nowrap"
+          style={{ fontVariationSettings: "'wdth' 100" }}
+        >
+          <span className="whitespace-pre">{text}</span>
+        </div>
+      </div>
     </button>
+  )
+}
+
+function TablerIconWallet() {
+  return (
+    <div className="relative w-full h-full">
+      <div className="absolute inset-[16.667%]">
+        <div className="absolute inset-[-6.25%]">
+          <img src={walletIcon} alt="Wallet" className="w-full h-full" />
+        </div>
+      </div>
+    </div>
   )
 }
 
@@ -41,6 +80,21 @@ export function Menu({ className }: MenuProps) {
   const [walletConnection, setWalletConnection] = useState<WalletConnection>({
     isConnected: false,
   })
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+
+  // Prevent body scroll when mobile menu is open
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = 'unset'
+    }
+
+    // Cleanup on unmount
+    return () => {
+      document.body.style.overflow = 'unset'
+    }
+  }, [isMobileMenuOpen])
 
   const handleConnectWallet = async () => {
     // TODO: Implement wallet connection logic
@@ -52,80 +106,149 @@ export function Menu({ className }: MenuProps) {
       balance: 1.5,
       chainId: 1,
     })
+    setIsMobileMenuOpen(false)
   }
 
   const handleDisconnectWallet = () => {
     setWalletConnection({
       isConnected: false,
     })
+    setIsMobileMenuOpen(false)
+  }
+
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen)
+  }
+
+  const closeMobileMenu = () => {
+    setIsMobileMenuOpen(false)
   }
 
   return (
-    <div
-      className={cn(
-        "backdrop-blur-[10px] bg-[var(--color-figma-dark-a)] border-b border-[var(--color-figma-dark-200)]",
-        "flex items-center justify-between px-6 py-4 w-full",
-        className
-      )}
-    >
-      {/* Left side - Logo and Navigation */}
-      <div className='flex items-center gap-3'>
-        {/* Logo and Brand */}
-        <div className='flex items-center gap-2'>
-          <div className='w-12 h-12 relative'>
-            <img
-              src={hypachinkoLogo}
-              alt='Hypachinko Logo'
-              className='w-full h-full'
-            />
-          </div>
-          <div className='text-bagel text-[32px] leading-[normal] text-[var(--color-figma-green-400)]'>
-            Hypachinko
-          </div>
-        </div>
-
-        {/* Navigation Buttons */}
-        <div className='flex items-center gap-2.5'>
-          <BtnText text='Machines' />
-          <BtnText text='Dashboard' />
-          <BtnText text='Marketplace' />
-        </div>
-      </div>
-
-      {/* Right side - Wallet Connection */}
-      <div className='relative'>
-        {walletConnection.isConnected ? (
-          <div className='flex items-center gap-3'>
-            <div className='text-[var(--color-figma-green-400)] text-[16px] text-instrument'>
-              {truncateAddress(walletConnection.address || "")}
-            </div>
-            <button
-              onClick={handleDisconnectWallet}
-              className='bg-[var(--color-figma-green-400)] text-[var(--color-figma-dark-600)] px-4 py-3 rounded-[100px] text-instrument text-[16px] font-normal transition-colors hover:bg-[var(--color-figma-green-200)] relative'
-            >
-              <div className='absolute inset-0 pointer-events-none shadow-[0px_4px_4px_0px_inset_rgba(255,255,255,0.5),0px_-4px_4px_0px_inset_rgba(0,0,0,0.25)] rounded-[100px]' />
-              <div className='absolute inset-0 pointer-events-none border border-[var(--color-figma-green-200)] rounded-[100px]' />
-              <span className='relative'>Disconnect</span>
-            </button>
-          </div>
-        ) : (
-          <button
-            onClick={handleConnectWallet}
-            className='bg-[var(--color-figma-green-400)] text-[var(--color-figma-dark-600)] px-4 py-3 rounded-[100px] text-instrument text-[16px] font-normal transition-colors hover:bg-[var(--color-figma-green-200)] relative flex items-center gap-2'
-          >
-            <div className='absolute inset-0 pointer-events-none shadow-[0px_4px_4px_0px_inset_rgba(255,255,255,0.5),0px_-4px_4px_0px_inset_rgba(0,0,0,0.25)] rounded-[100px]' />
-            <div className='absolute inset-0 pointer-events-none border border-[var(--color-figma-green-200)] rounded-[100px]' />
-            <div className='relative w-6 h-6'>
+    <>
+      <div
+        className={cn(
+          "backdrop-blur-[10px] bg-[var(--color-figma-dark-600)] border-b border-[var(--color-figma-dark-200)]",
+          "flex items-center justify-between px-6 py-4 w-full relative",
+          className
+        )}
+      >
+        {/* Left side - Logo and Navigation */}
+        <div className="flex items-center gap-3">
+          {/* Logo and Brand */}
+          <div className="flex items-center gap-2 h-12">
+            <div className="w-12 h-12 relative">
               <img
-                src={walletIcon}
-                alt='Wallet Icon'
-                className='w-full h-full'
+                src={hypachinkoLogo}
+                alt="Hypachinko Logo"
+                className="w-full h-full"
               />
             </div>
-            <span className='relative'>Connect Wallet</span>
+            <div className="text-bagel text-[32px] leading-[normal] text-[var(--color-figma-green-400)] text-nowrap">
+              Hypachinko
+            </div>
+          </div>
+
+          {/* Desktop Navigation Buttons */}
+          <div className="hidden md:flex items-center gap-2.5 h-12">
+            <BtnText text="Machines" />
+            <BtnText text="Dashboard" />
+            <BtnText text="Marketplace" />
+          </div>
+        </div>
+
+        {/* Mobile Hamburger Menu */}
+        <div className="md:hidden">
+          <button
+            onClick={toggleMobileMenu}
+            className="text-[var(--color-figma-green-400)] p-2"
+          >
+            <div className="w-6 h-6 flex flex-col justify-center items-center gap-1">
+              <div className={cn(
+                "w-5 h-0.5 bg-current transition-all duration-300",
+                isMobileMenuOpen ? "rotate-45 translate-y-1.5" : ""
+              )} />
+              <div className={cn(
+                "w-5 h-0.5 bg-current transition-all duration-300",
+                isMobileMenuOpen ? "opacity-0" : ""
+              )} />
+              <div className={cn(
+                "w-5 h-0.5 bg-current transition-all duration-300",
+                isMobileMenuOpen ? "-rotate-45 -translate-y-1.5" : ""
+              )} />
+            </div>
           </button>
-        )}
+        </div>
+
+        {/* Right side - Desktop Wallet Connection */}
+        <div className="hidden md:block relative">
+          {walletConnection.isConnected ? (
+            <div className="flex items-center gap-3">
+              <div className="text-[var(--color-figma-green-400)] text-[16px] text-instrument">
+                {truncateAddress(walletConnection.address || "")}
+              </div>
+              <BtnIcontext
+                text="Disconnect"
+                onClick={handleDisconnectWallet}
+              />
+            </div>
+          ) : (
+            <BtnIcontext
+              text="Connect Wallet"
+              leftIcon={<TablerIconWallet />}
+              onClick={handleConnectWallet}
+            />
+          )}
+        </div>
       </div>
-    </div>
+
+      {/* Mobile Menu Full Screen Overlay */}
+      {isMobileMenuOpen && (
+        <div className="md:hidden fixed inset-0 bg-[var(--color-figma-dark-600)] z-[9999] flex flex-col overflow-hidden">
+          {/* Header with X button */}
+          <div className="flex justify-end p-6">
+            <button
+              onClick={closeMobileMenu}
+              className="text-[var(--color-figma-green-400)] p-2"
+            >
+              <div className="w-6 h-6 relative">
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="w-5 h-0.5 bg-current rotate-45" />
+                  <div className="absolute w-5 h-0.5 bg-current -rotate-45" />
+                </div>
+              </div>
+            </button>
+          </div>
+
+          {/* Centered Navigation Items */}
+          <div className="flex-1 flex flex-col items-center justify-center gap-8 px-6">
+            <BtnText text="Machines" onClick={closeMobileMenu} />
+            <BtnText text="Dashboard" onClick={closeMobileMenu} />
+            <BtnText text="Marketplace" onClick={closeMobileMenu} />
+            
+            {/* Mobile Wallet Connection */}
+            <div className="mt-8">
+              {walletConnection.isConnected ? (
+                <div className="flex flex-col items-center gap-4">
+                  <div className="text-[var(--color-figma-green-400)] text-[16px] text-instrument text-center">
+                    {truncateAddress(walletConnection.address || "")}
+                  </div>
+                  <BtnIcontext
+                    text="Disconnect"
+                    onClick={handleDisconnectWallet}
+                  />
+                </div>
+              ) : (
+                <BtnIcontext
+                  text="Connect Wallet"
+                  leftIcon={<TablerIconWallet />}
+                  onClick={handleConnectWallet}
+                />
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+    </>
   )
 }

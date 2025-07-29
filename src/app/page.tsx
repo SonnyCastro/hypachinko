@@ -128,25 +128,25 @@ export default function Home() {
       token: { name: "USDT0", icon: ASSETS.icons.usdt },
       timeLeft: "07:35:00",
       progressWidth: "454px",
-      progressColor: "#00b988",
+      progressColor: "#00B988",
       alarmIcon: ASSETS.icons.alarm,
     },
     {
-      token: { name: "HYPE", icon: ASSETS.icons.usdt },
+      token: { name: "HYPE", icon: ASSETS.icons.hyperliquid },
       timeLeft: "22:32:00",
       progressWidth: "530px",
       progressColor: "#50ffd6",
       alarmIcon: ASSETS.icons.alarm,
     },
     {
-      token: { name: "TOKEN", icon: ASSETS.icons.sphere },
+      token: { name: "TOKEN", icon: ASSETS.icons.pokerChipBlue },
       timeLeft: "01:35:15",
       progressWidth: "184px",
       progressColor: "#b5f1ff",
       alarmIcon: ASSETS.icons.alarm,
     },
     {
-      token: { name: "TOKEN", icon: ASSETS.icons.sphere },
+      token: { name: "TOKEN", icon: ASSETS.icons.pokerChipPurple },
       timeLeft: "00:35:00",
       progressWidth: "78px",
       progressColor: "#e0bdff",
@@ -170,7 +170,7 @@ export default function Home() {
         {/* Hero Section */}
         <div className='w-full relative'>
           {/* Navbar spacer */}
-          <div className='h-20 w-full' />
+          <div className='h-10 w-full' />
 
           {/* Hero content */}
           <div className='flex flex-col gap-[38px] h-[877px] items-center justify-center relative w-full px-4'>
@@ -183,7 +183,7 @@ export default function Home() {
             />
 
             {/* Main title */}
-            <div className='text-bagel text-8xl leading-[1.1] text-[var(--color-figma-green-400)] text-center relative z-10'>
+            <div className='text-bagel text-7xl leading-[1.1] text-[var(--color-figma-green-400)] text-center relative z-10'>
               <p className='block mb-0'>CASH IN!</p>
               <p className='block'>CRASH OUT.</p>
             </div>
@@ -211,7 +211,7 @@ export default function Home() {
             </div>
 
             {/* Purchase history sidebar */}
-            <div className='absolute right-4 top-[156px] w-64 z-10'>
+            <div className='hidden lg:block absolute right-4 top-[156px] w-64 z-10'>
               <RecentActivityFeed activities={activities} />
             </div>
           </div>
