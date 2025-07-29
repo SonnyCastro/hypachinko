@@ -5,6 +5,7 @@ import "./globals.css"
 
 // Import your custom fonts using Next.js font optimization
 import { Instrument_Sans } from "next/font/google"
+import localFont from "next/font/local"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -24,18 +25,18 @@ const instrumentSans = Instrument_Sans({
   weight: ["400", "500", "600", "700"],
 })
 
-// Temporarily using Google Fonts for Bagel Fat One until we fix local font loading
-// const bagelFatOne = localFont({
-//   src: [
-//     {
-//       path: "../../public/fonts/BagelFatOne-Regular.ttf",
-//       weight: "400",
-//       style: "normal",
-//     },
-//   ],
-//   variable: "--font-bagel",
-//   display: "swap",
-// })
+// Configure Bagel Fat One as a local font
+const bagelFatOne = localFont({
+  src: [
+    {
+      path: "../../public/fonts/BagelFatOne-Regular.ttf",
+      weight: "400",
+      style: "normal",
+    },
+  ],
+  variable: "--font-bagel",
+  display: "swap",
+})
 
 export const metadata: Metadata = {
   title: "Hypachinko - Decentralized Gaming",
@@ -50,7 +51,7 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${instrumentSans.variable} antialiased bg-[#171717] text-white`}
+        className={`${geistSans.variable} ${geistMono.variable} ${instrumentSans.variable} ${bagelFatOne.variable} antialiased bg-[#171717] text-white`}
       >
         <Menu />
         <main className='min-h-screen'>{children}</main>

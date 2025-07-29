@@ -22,18 +22,18 @@
   --color-light-blue: #3b82f6;
 
   /* Custom Font Families - Now using Next.js font variables */
-  --font-family-bagel: 'Bagel Fat One', cursive; /* Using Google Fonts for now */
+  --font-family-bagel: var(--font-bagel); /* Using Next.js optimized Bagel Fat One */
   --font-family-instrument: var(--font-instrument); /* Using Next.js optimized Instrument Sans */
 }
 
 /* Custom Font Utility Classes */
 .text-bagel {
-  font-family: var(--font-family-bagel), 'Bagel Fat One', cursive;
+  font-family: var(--font-family-bagel);
   font-weight: 400;
 }
 
 .text-instrument {
-  font-family: var(--font-family-instrument), 'Instrument Sans', sans-serif;
+  font-family: var(--font-family-instrument);
   font-weight: 400;
 }
 
