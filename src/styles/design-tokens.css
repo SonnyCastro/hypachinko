@@ -28,7 +28,7 @@
 
 /* Custom Font Utility Classes */
 .text-bagel {
-  font-family: var(--font-family-bagel);
+  font-family: var(--font-bagel);
   font-weight: 400;
 }
 

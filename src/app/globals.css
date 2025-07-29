@@ -1,6 +1,4 @@
 /* Font imports are now handled by Next.js font optimization in layout.tsx */
-/* No external font imports needed - all fonts are optimized via next/font */
-
 @import "tailwindcss";
 @import "../styles/design-tokens.css";
 
@@ -30,49 +28,48 @@ body {
 
 /* Utility classes for design tokens */
 .text-display {
-  font-family: var(--font-family-display);
-  font-weight: var(--font-weight-bold);
-  line-height: var(--line-height-tight);
-  letter-spacing: var(--letter-spacing-tight);
+  font-family: var(--font-family-bagel);
+  font-weight: 400;
+  line-height: 1.1;
 }
 
 .text-heading {
-  font-family: var(--font-family-primary);
-  font-weight: var(--font-weight-semibold);
-  line-height: var(--line-height-tight);
+  font-family: var(--font-family-instrument);
+  font-weight: 600;
+  line-height: 1.2;
 }
 
 .text-body {
-  font-family: var(--font-family-primary);
-  font-weight: var(--font-weight-normal);
-  line-height: var(--line-height-normal);
+  font-family: var(--font-family-instrument);
+  font-weight: 400;
+  line-height: 1.5;
 }
 
 .text-mono {
-  font-family: var(--font-family-mono);
-  font-weight: var(--font-weight-normal);
+  font-family: var(--font-geist-mono);
+  font-weight: 400;
 }
 
 /* Container utility */
 .container {
-  max-width: var(--container-max-width);
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 0 var(--container-padding);
+  padding: 0 1rem;
 }
 
 /* Focus styles */
 .focus-ring {
-  outline: 2px solid var(--color-primary);
+  outline: 2px solid var(--color-figma-green-400);
   outline-offset: 2px;
 }
 
 /* Animation classes */
 .animate-fade-in {
-  animation: fadeIn var(--transition-normal) ease-in-out;
+  animation: fadeIn 0.3s ease-in-out;
 }
 
 .animate-slide-up {
-  animation: slideUp var(--transition-normal) ease-in-out;
+  animation: slideUp 0.3s ease-in-out;
 }
 
 .animate-pulse {
@@ -96,18 +93,18 @@ body {
 /* Responsive utilities */
 @media (min-width: 640px) {
   .container {
-    padding: 0 var(--spacing-6);
+    padding: 0 1.5rem;
   }
 }
 
 @media (min-width: 768px) {
   .container {
-    padding: 0 var(--spacing-8);
+    padding: 0 2rem;
   }
 }
 
 @media (min-width: 1024px) {
   .container {
-    padding: 0 var(--spacing-8);
+    padding: 0 2rem;
   }
 }

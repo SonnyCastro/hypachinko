@@ -57,7 +57,7 @@ export default function MachinesPage() {
         <div className='flex flex-col gap-8 items-center justify-start w-full max-w-[1024px] px-4 py-8'>
           {/* Total for grabs section */}
           <div className='bg-[#3fefc0] flex flex-col gap-2 items-center justify-start py-2 px-2 rounded-lg w-full relative overflow-hidden'>
-            <div className='text-bagel text-xl text-[#000000] text-center w-full leading-[1.1]'>
+            <div className='text-bagel text-2xl text-[#000000] text-center w-full leading-[1.1]'>
               Total for grabs
             </div>
             <div className='text-bagel text-5xl text-[#000000] text-center w-full leading-[normal]'>

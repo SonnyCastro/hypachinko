@@ -5,7 +5,7 @@ import "./globals.css"
 
 // Import your custom fonts using Next.js font optimization
 import { Instrument_Sans } from "next/font/google"
-import localFont from "next/font/local"
+import { Bagel_Fat_One } from "next/font/google"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,17 +25,12 @@ const instrumentSans = Instrument_Sans({
   weight: ["400", "500", "600", "700"],
 })
 
-// Configure Bagel Fat One as a local font
-const bagelFatOne = localFont({
-  src: [
-    {
-      path: "../../public/fonts/BagelFatOne-Regular.ttf",
-      weight: "400",
-      style: "normal",
-    },
-  ],
+// Configure Bagel Fat One font with optimization
+const bagelFatOne = Bagel_Fat_One({
+  subsets: ["latin"],
   variable: "--font-bagel",
   display: "swap",
+  weight: "400",
 })
 
 export const metadata: Metadata = {
