@@ -1,16 +1,14 @@
-/* Import custom fonts first */
-@import url('https://fonts.googleapis.com/css2?family=Bagel+Fat+One&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,opsz,wght@0,12..40,300..700;1,12..40,300..700&display=swap');
+/* Font imports are now handled by Next.js font optimization in layout.tsx */
+/* No external font imports needed - all fonts are optimized via next/font */
 
 @import "tailwindcss";
 @import "../styles/design-tokens.css";
 
+
+/* Theme variables - using standard CSS custom properties */
 :root {
   --background: var(--color-background);
   --foreground: var(--color-foreground);
-}
-
-@theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-family-primary);

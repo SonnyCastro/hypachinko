@@ -3,6 +3,10 @@ import { Geist, Geist_Mono } from "next/font/google"
 import { Menu, Footer } from "@/components/layout"
 import "./globals.css"
 
+// Import your custom fonts using Next.js font optimization
+import { Instrument_Sans } from "next/font/google"
+import localFont from "next/font/local"
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -11,6 +15,21 @@ const geistSans = Geist({
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+})
+
+// Configure Instrument Sans font with optimization
+const instrumentSans = Instrument_Sans({
+  subsets: ["latin"],
+  variable: "--font-instrument",
+  display: "swap",
+  weight: ["400", "500", "600", "700"],
+})
+
+// Configure Bagel Fat One as a local font
+const bagelFatOne = localFont({
+  src: "../fonts/Bagel_Fat_One/BagelFatOne-Regular.ttf",
+  variable: "--font-bagel",
+  display: "swap",
 })
 
 export const metadata: Metadata = {
@@ -26,7 +45,7 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#171717] text-white`}
+        className={`${geistSans.variable} ${geistMono.variable} ${instrumentSans.variable} ${bagelFatOne.variable} antialiased bg-[#171717] text-white`}
       >
         <Menu />
         <main className='min-h-screen'>{children}</main>

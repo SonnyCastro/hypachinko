@@ -21,9 +21,9 @@
   --color-light-purple: #a855f7;
   --color-light-blue: #3b82f6;
 
-  /* Custom Font Families */
-  --font-family-bagel: 'Bagel Fat One', cursive;
-  --font-family-instrument: 'Instrument Sans', sans-serif;
+  /* Custom Font Families - Now using Next.js font variables */
+  --font-family-bagel: var(--font-bagel); /* Using Next.js optimized Bagel Fat One */
+  --font-family-instrument: var(--font-instrument); /* Using Next.js optimized Instrument Sans */
 }
 
 /* Custom Font Utility Classes */
