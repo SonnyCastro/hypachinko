@@ -8,4 +8,6 @@ export { StatisticCard } from './StatisticCard';
 export { ActionButton } from './ActionButton';
 export { GameInterface } from './GameInterface';
 export { HowItWorksSection } from './HowItWorksSection';
-export { HypachinkoSection } from './HypachinkoSection'; 
+export { HypachinkoSection } from './HypachinkoSection';
+export { CountdownTimer } from './CountdownTimer';
+export { MachineCard } from './MachineCard'; 

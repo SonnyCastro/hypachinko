@@ -23,10 +23,10 @@ export function TokenButton({ text, icon, isActive = false, onClick }: TokenButt
     <button
       onClick={onClick}
       className={`
-        cursor-pointer flex flex-row gap-1 items-center justify-start p-2 rounded-[100px] w-[130px] h-12 transition-colors relative
+        bg-[var(--color-figma-dark-600)] cursor-pointer flex flex-row gap-1 items-center justify-start p-2 rounded-[100px] w-[130px] h-12 transition-colors relative
         ${isActive 
           ? "bg-[var(--color-figma-green-400)]" 
-          : "hover:bg-[rgba(63,239,192,0.2)]"
+          : "md:hover:bg-[rgba(63,239,192,0.2)]"
         }
       `}
       style={{ fontVariationSettings: "'wdth' 100" }}

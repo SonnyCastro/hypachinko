@@ -1,5 +1,6 @@
 "use client"
 
+import Link from "next/link"
 import { ASSETS } from "@/constants/assets"
 import { TokenJackpotCard } from "../TokenJackpotCard"
 import { DrawTimer } from "../DrawTimer"
@@ -93,14 +94,15 @@ export function HowItWorksSection({
                 </div>
                 <div className='text-instrument font-normal text-xl text-[var(--color-gray-200)] w-full'>
                   Bags too heavy? Resell your balls in the marketplace. If
-                  you're lucky somebody will grab'em!
+                  you&apos;re lucky somebody will grab&apos;em!
                 </div>
               </div>
-              <ContextButton
-                text='Marketplace'
-                icon={ASSETS.icons.ticket}
-                onClick={() => console.log("Marketplace clicked")}
-              />
+              <Link href="/marketplace">
+                <ContextButton
+                  text='Marketplace'
+                  icon={ASSETS.icons.ticket}
+                />
+              </Link>
             </div>
 
             {/* Add More Balls */}
@@ -114,11 +116,12 @@ export function HowItWorksSection({
                   your chances of hitting the jackpot.
                 </div>
               </div>
-              <ContextButton
-                text='Machines'
-                icon={ASSETS.icons.gamepad}
-                onClick={() => console.log("Machines clicked")}
-              />
+              <Link href="/machines">
+                <ContextButton
+                  text='Machines'
+                  icon={ASSETS.icons.gamepad}
+                />
+              </Link>
             </div>
           </div>
         </div>

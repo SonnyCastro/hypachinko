@@ -22,12 +22,15 @@ export const ASSETS = {
     hyperliquidAlt: '/icons/hyperliquid-icon-alt.svg',
     ticket: '/icons/ticket-icon.svg',
     gamepad: '/icons/device-gamepad.svg',
+    group4: '/icons/group-4.svg',
+    group5: '/icons/group-5.svg',
   },
 
   // Images
   images: {
     mascot: '/images/mascot-hypachinko.png',
     gameplay: '/images/hypachinko-gameplay.png',
+    mascot_playing: '/images/mascot-playing.png',
   },
 
   // Logos

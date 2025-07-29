@@ -11,7 +11,6 @@ import {
   HowItWorksSection,
   HypachinkoSection,
 } from "@/components/features"
-import { Footer } from "@/components/layout"
 
 export default function Home() {
   // Game state management with custom hook
@@ -44,15 +43,7 @@ export default function Home() {
     }))
   }, [tokens, selectedToken])
 
-  const tokenInfo = useMemo(
-    () => ({
-      icon: ASSETS.icons.usdt,
-      name: "USDT0",
-      rate: "1 USDT0 = 1 BALL",
-      price: "$0.99",
-    }),
-    []
-  )
+
 
   const activities = useMemo(
     () => [
@@ -198,12 +189,9 @@ export default function Home() {
 
               {/* Main game interface */}
               <GameInterface
-                jackpotAmount='$50,000'
-                timeLeft='07:35:24'
-                tokenInfo={tokenInfo}
+                selectedToken={selectedToken}
                 selectedPercentage={selectedPercentage}
                 ballCount={ballCount}
-                onInfoClick={() => console.log("Info clicked")}
                 onBuyBalls={handleBuyBalls}
                 onPercentageSelect={handlePercentageSelect}
                 onBallCountChange={handleBallCountChange}
@@ -211,7 +199,7 @@ export default function Home() {
             </div>
 
             {/* Purchase history sidebar */}
-            <div className='hidden lg:block absolute right-4 top-[156px] w-64 z-10'>
+            <div className='hidden xl:block absolute right-4 top-[156px] w-64 z-10'>
               <RecentActivityFeed activities={activities} />
             </div>
           </div>
@@ -225,9 +213,6 @@ export default function Home() {
 
         {/* Hypachinko section */}
         <HypachinkoSection statistics={statistics} />
-
-        {/* Footer */}
-        <Footer />
       </div>
     </div>
   )

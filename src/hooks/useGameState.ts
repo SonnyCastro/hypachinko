@@ -1,7 +1,5 @@
 import { useReducer, useCallback } from 'react'
-
-// Game constants
-const MAX_BALLS = 5000
+import { useGameLogic } from './useGameLogic'
 
 // Game state types
 interface GameState {
@@ -16,36 +14,24 @@ type GameAction =
   | { type: 'SET_TOKEN'; payload: string }
   | { type: 'CLEAR_PERCENTAGE' }
 
-// Helper function for ball count calculation
-const calculateBallCountFromPercentage = (percentage: string): number => {
-  switch (percentage) {
-    case "25%":
-      return Math.floor(MAX_BALLS * 0.25)
-    case "50%":
-      return Math.floor(MAX_BALLS * 0.5)
-    case "75%":
-      return Math.floor(MAX_BALLS * 0.75)
-    case "MAX":
-      return MAX_BALLS
-    default:
-      return 0
-  }
-}
-
 // Game state reducer
 const gameReducer = (state: GameState, action: GameAction): GameState => {
+  const gameLogic = useGameLogic()
+
   switch (action.type) {
     case 'SET_PERCENTAGE':
+      const percentageResult = gameLogic.handlePercentageSelect(action.payload)
       return {
         ...state,
-        selectedPercentage: action.payload,
-        ballCount: calculateBallCountFromPercentage(action.payload)
+        selectedPercentage: percentageResult.percentage,
+        ballCount: percentageResult.ballCount
       }
     case 'SET_BALL_COUNT':
+      const ballCountResult = gameLogic.handleBallCountChange(action.payload)
       return {
         ...state,
-        ballCount: Math.min(Math.max(0, action.payload), MAX_BALLS),
-        selectedPercentage: '' // Clear percentage when manually entering
+        ballCount: ballCountResult.ballCount,
+        selectedPercentage: ballCountResult.percentage
       }
     case 'SET_TOKEN':
       return {
@@ -96,6 +82,8 @@ export const useGameState = (initialState?: Partial<GameState>) => {
     }
   }, [gameState.ballCount, gameState.selectedToken])
 
+  const gameLogic = useGameLogic()
+
   return {
     // State
     ...gameState,
@@ -106,6 +94,6 @@ export const useGameState = (initialState?: Partial<GameState>) => {
     clearPercentage,
     buyBalls,
     // Constants
-    MAX_BALLS
+    MAX_BALLS: gameLogic.MAX_BALLS
   }
 } 

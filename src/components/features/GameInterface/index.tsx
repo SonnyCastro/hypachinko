@@ -5,37 +5,54 @@ import { ASSETS } from "@/constants/assets"
 import { PercentageButton } from "./PercentageButton"
 import { ActionButton } from "../ActionButton"
 import { LightStrip } from "../../common/LightStrip"
-
-interface TokenInfo {
-  icon: string
-  name: string
-  rate: string
-  price: string
-}
+import { CountdownTimer } from "../CountdownTimer"
+import { TokenData, getTokenData } from "@/constants/tokenData"
+import { JackpotDistributionModal } from "../../ui/JackpotDistributionModal"
+import { useJackpotModal } from "@/hooks/useJackpotModal"
+import { MAX_BALLS, PERCENTAGE_OPTIONS } from "@/constants/game"
 
 interface GameInterfaceProps {
-  jackpotAmount: string
-  timeLeft: string
-  tokenInfo: TokenInfo
+  selectedToken: string
   selectedPercentage: string
   ballCount: number
-  onInfoClick?: () => void
   onBuyBalls?: () => void
   onPercentageSelect?: (percentage: string) => void
   onBallCountChange?: (count: number) => void
 }
 
 export function GameInterface({
-  jackpotAmount,
-  timeLeft,
-  tokenInfo,
+  selectedToken,
   selectedPercentage,
   ballCount,
-  onInfoClick,
   onBuyBalls,
   onPercentageSelect,
   onBallCountChange,
 }: GameInterfaceProps) {
+  // Get token data based on selected token
+  const tokenData: TokenData | null = React.useMemo(() => {
+    return getTokenData(selectedToken)
+  }, [selectedToken])
+
+  // Fallback to default data if token not found
+  const defaultTokenData: TokenData = {
+    id: "usdt0",
+    name: "USDT0",
+    icon: ASSETS.icons.usdt,
+    jackpotAmount: "$50,000",
+    startTime: new Date(
+      Date.now() + 7 * 60 * 60 * 1000 + 35 * 60 * 1000 + 24 * 1000
+    ),
+    rate: "1 USDT0 = 1 BALL",
+    price: "$0.99",
+    availableAmount: "50,000 USDT available",
+    lightStripColor: "#00B988", // Default green
+  }
+
+  const currentTokenData = tokenData || defaultTokenData
+
+  // Modal state
+  const { isModalOpen, openModal, closeModal } = useJackpotModal()
+
   return (
     <div className='h-[564px] relative rounded-bl-[48px] rounded-br-[48px] rounded-tl-[8px] rounded-tr-[8px] w-full border-4 border-[#dedede] bg-[var(--color-figma-dark-600)] overflow-hidden'>
       <div className='flex flex-col h-full items-start justify-start w-full'>
@@ -46,27 +63,27 @@ export function GameInterface({
             <div className='flex flex-row gap-1 items-center justify-start'>
               <div className='w-8 h-8 relative'>
                 <img
-                  src={tokenInfo.icon}
-                  alt={tokenInfo.name}
+                  src={currentTokenData.icon}
+                  alt={currentTokenData.name}
                   className='w-full h-full'
                 />
               </div>
               <div className='text-instrument font-bold text-[20px] text-[var(--color-figma-green-400)] text-center'>
-                {tokenInfo.name}
+                {currentTokenData.name}
               </div>
             </div>
             <div className='flex flex-row gap-2 items-center justify-start text-[var(--color-gray-400)] text-[16px] text-center'>
-              <div>{tokenInfo.rate}</div>
-              <div>({tokenInfo.price})</div>
+              <div>{currentTokenData.rate}</div>
+              <div>({currentTokenData.price})</div>
             </div>
           </div>
 
           {/* Jackpot and timer section */}
           <div className='flex flex-row gap-4 items-center justify-start w-full'>
             {/* Left lights */}
-            <LightStrip 
-              color="var(--color-light-inactive)"
-              activeColor="var(--color-light-active)"
+            <LightStrip
+              color={currentTokenData.lightStripColor}
+              activeColor={currentTokenData.lightStripColor}
             />
 
             {/* Jackpot card */}
@@ -74,19 +91,19 @@ export function GameInterface({
               <div className='flex flex-col items-center justify-start p-3 w-full relative'>
                 <div className='absolute border-[var(--color-figma-dark-600)] border-[0px_0px_4px] border-solid bottom-0 left-0 right-0 pointer-events-none' />
                 <div className='flex flex-row gap-2 items-start justify-center w-full'>
-                  <div 
+                  <div
                     className='text-instrument font-bold text-[20px] text-[var(--color-figma-yellow-200)] text-center text-nowrap'
-                    style={{ 
+                    style={{
                       fontVariationSettings: "'wdth' 100",
-                      fontSize: '1.25rem',
-                      fontWeight: '700',
-                      lineHeight: '110%'
+                      fontSize: "1.25rem",
+                      fontWeight: "700",
+                      lineHeight: "110%",
                     }}
                   >
                     JACKPOT
                   </div>
                   <button
-                    onClick={onInfoClick}
+                    onClick={openModal}
                     className='w-5 h-5 relative cursor-pointer overflow-clip'
                   >
                     <div className='absolute bottom-[8.3%] left-[8.333%] right-[8.333%] top-[8.333%]'>
@@ -98,33 +115,36 @@ export function GameInterface({
                     </div>
                   </button>
                 </div>
-                <div 
+                <div
                   className='text-bagel text-[48px] text-[var(--color-figma-yellow-200)] text-center w-full'
                   style={{ fontVariationSettings: "'wdth' 100" }}
                 >
-                  {jackpotAmount}
+                  {currentTokenData.jackpotAmount}
                 </div>
               </div>
               <div className='flex flex-col items-center justify-start p-3 text-[var(--color-figma-green-400)] text-center w-full'>
-                <div 
+                <div
                   className='text-instrument text-center w-full'
-                  style={{ 
+                  style={{
                     fontVariationSettings: "'wdth' 100",
-                    fontSize: '1.25rem',
-                    fontWeight: '700',
-                    lineHeight: '110%'
+                    fontSize: "1.25rem",
+                    fontWeight: "700",
+                    lineHeight: "110%",
                   }}
                 >
                   Time Left
                 </div>
-                <div className='text-bagel text-[48px] w-full'>{timeLeft}</div>
+                <CountdownTimer
+                  startTime={currentTokenData.startTime}
+                  className='text-[var(--color-figma-green-400)]'
+                />
               </div>
             </div>
 
             {/* Right lights */}
-            <LightStrip 
-              color="var(--color-light-inactive)"
-              activeColor="var(--color-light-active)"
+            <LightStrip
+              color={currentTokenData.lightStripColor}
+              activeColor={currentTokenData.lightStripColor}
             />
           </div>
         </div>
@@ -162,7 +182,7 @@ export function GameInterface({
                     }
                   }}
                   min='0'
-                  max='5000'
+                  max={MAX_BALLS.toString()}
                   className='text-[var(--color-figma-dark-600)] text-5xl text-start bg-transparent border-none outline-none w-full font-instrument font-normal leading-[1.1] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-moz-number-spin-button]:appearance-none focus:ring-0 focus:border-none cursor-text placeholder:text-black'
                   placeholder='0'
                   style={{
@@ -172,7 +192,7 @@ export function GameInterface({
                   }}
                 />
                 <div className='text-[#8b8b8b] text-sm text-nowrap'>
-                  50,000 USDT available
+                  {currentTokenData.availableAmount}
                 </div>
               </div>
               <div className='bg-[#dedede] flex flex-row gap-1 items-center justify-start p-1 rounded'>
@@ -189,26 +209,14 @@ export function GameInterface({
               </div>
             </div>
             <div className='flex flex-row gap-2 items-center justify-between w-full'>
-              <PercentageButton
-                percentage='25%'
-                onClick={() => onPercentageSelect?.("25%")}
-                isActive={selectedPercentage === "25%"}
-              />
-              <PercentageButton
-                percentage='50%'
-                onClick={() => onPercentageSelect?.("50%")}
-                isActive={selectedPercentage === "50%"}
-              />
-              <PercentageButton
-                percentage='75%'
-                onClick={() => onPercentageSelect?.("75%")}
-                isActive={selectedPercentage === "75%"}
-              />
-              <PercentageButton
-                percentage='MAX'
-                onClick={() => onPercentageSelect?.("MAX")}
-                isActive={selectedPercentage === "MAX"}
-              />
+              {PERCENTAGE_OPTIONS.map((percentage) => (
+                <PercentageButton
+                  key={percentage}
+                  percentage={percentage}
+                  onClick={() => onPercentageSelect?.(percentage)}
+                  isActive={selectedPercentage === percentage}
+                />
+              ))}
             </div>
           </div>
           <ActionButton
@@ -218,6 +226,13 @@ export function GameInterface({
           />
         </div>
       </div>
+
+      {/* Jackpot Distribution Modal */}
+      <JackpotDistributionModal
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        totalJackpot={currentTokenData.jackpotAmount}
+      />
     </div>
   )
 }

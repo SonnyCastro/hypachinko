@@ -15,7 +15,7 @@ export function UpForGrabsDisplay({
   sphereIcon = ASSETS.icons.sphereSmall,
 }: UpForGrabsDisplayProps) {
   return (
-    <div className='bg-[var(--color-figma-green-400)] flex flex-col items-center justify-start py-4 w-full overflow-hidde relative z-200 '>
+    <div className='bg-[var(--color-figma-green-400)] flex flex-col items-center justify-start py-4 w-full overflow-hidden relative'>
       {/* Title */}
       <div className='text-bagel text-[32px] text-[var(--color-figma-dark-600)] text-center w-full leading-[1.1]'>
         UP FOR GRABS

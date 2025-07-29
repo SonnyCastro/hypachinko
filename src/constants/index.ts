@@ -49,6 +49,8 @@ export const ANIMATION_DURATIONS = {
   slow: 350,
 } as const;
 
+
+
 export const ERROR_MESSAGES = {
   walletConnectionFailed: 'Failed to connect wallet',
   insufficientBalance: 'Insufficient balance',
@@ -63,4 +65,13 @@ export const SUCCESS_MESSAGES = {
 } as const;
 
 // Re-export assets for convenience
-export { ASSETS, getAssetPath } from './assets'; 
+export { ASSETS, getAssetPath } from './assets';
+
+// Re-export game constants for convenience
+export {
+  MAX_BALLS,
+  PERCENTAGE_OPTIONS,
+  calculateBallCountFromPercentage,
+  validateBallCount,
+  isValidPercentage
+} from './game'; 

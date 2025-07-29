@@ -1,6 +1,8 @@
 "use client"
 
 import React from "react"
+import { JackpotDistributionModal } from "../../ui/JackpotDistributionModal"
+import { useJackpotModal } from "@/hooks/useJackpotModal"
 
 interface JackpotCountdownProps {
   jackpotAmount: string
@@ -11,15 +13,15 @@ interface JackpotCountdownProps {
     rate: string
     price: string
   }
-  onInfoClick?: () => void
 }
 
 export function JackpotCountdown({
   jackpotAmount,
   timeLeft,
   tokenInfo,
-  onInfoClick,
 }: JackpotCountdownProps) {
+  // Modal state
+  const { isModalOpen, openModal, closeModal } = useJackpotModal()
   return (
     <div className='flex flex-col gap-4 items-start justify-start w-full'>
       {/* Token info */}
@@ -74,7 +76,7 @@ export function JackpotCountdown({
               <div className='text-instrument font-bold text-[20px] text-[#ffef0a] text-center'>
                 JACKPOT
               </div>
-              <button className='w-5 h-5 relative' onClick={onInfoClick}>
+              <button className='w-5 h-5 relative' onClick={openModal}>
                 <img
                   src='/icons/info-circle.svg'
                   alt='Info'
@@ -116,6 +118,13 @@ export function JackpotCountdown({
           </div>
         </div>
       </div>
+      
+      {/* Jackpot Distribution Modal */}
+      <JackpotDistributionModal
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        totalJackpot={jackpotAmount}
+      />
     </div>
   )
 }
