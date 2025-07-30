@@ -11,6 +11,7 @@ interface GameState {
 type GameAction =
   | { type: 'SET_PERCENTAGE'; payload: string }
   | { type: 'SET_BALL_COUNT'; payload: number }
+  | { type: 'SET_BALL_COUNT_AND_PERCENTAGE'; payload: { ballCount: number; percentage: string } }
   | { type: 'SET_TOKEN'; payload: string }
   | { type: 'CLEAR_PERCENTAGE' }
 
@@ -28,6 +29,12 @@ const gameReducer = (state: GameState, action: GameAction): GameState => {
         ...state,
         ballCount: action.payload,
         selectedPercentage: '' // Clear percentage when manually entering
+      }
+    case 'SET_BALL_COUNT_AND_PERCENTAGE':
+      return {
+        ...state,
+        ballCount: action.payload.ballCount,
+        selectedPercentage: action.payload.percentage
       }
     case 'SET_TOKEN':
       return {
@@ -65,9 +72,8 @@ export const useGameState = (initialState?: Partial<GameState>) => {
 
   const setBallCount = useCallback((count: number) => {
     const result = gameLogic.handleBallCountChange(count)
-    dispatch({ type: 'SET_BALL_COUNT', payload: result.ballCount })
-    // Update percentage separately
-    dispatch({ type: 'SET_PERCENTAGE', payload: result.percentage })
+    // Update both ball count and percentage in one dispatch
+    dispatch({ type: 'SET_BALL_COUNT_AND_PERCENTAGE', payload: result })
   }, [gameLogic])
 
   const setToken = useCallback((tokenId: string) => {
