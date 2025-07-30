@@ -5,11 +5,11 @@ import { ASSETS } from "@/constants/assets"
 import { useGameState } from "@/hooks/useGameState"
 import {
   TokenSelector,
-  GameInterface,
   UpForGrabsDisplay,
   RecentActivityFeed,
   HowItWorksSection,
   HypachinkoSection,
+  MachineCard,
 } from "@/components/features"
 
 export default function Home() {
@@ -42,8 +42,6 @@ export default function Home() {
       isActive: token.id === selectedToken,
     }))
   }, [tokens, selectedToken])
-
-
 
   const activities = useMemo(
     () => [
@@ -161,26 +159,26 @@ export default function Home() {
         {/* Hero Section */}
         <div className='w-full relative'>
           {/* Navbar spacer */}
-          <div className='h-10 w-full' />
+          <div className='h-8 sm:h-10 w-full' />
 
           {/* Hero content */}
-          <div className='flex flex-col gap-[38px] h-[877px] items-center justify-center relative w-full px-4'>
+          <div className='flex flex-col gap-6 sm:gap-8 lg:gap-[38px] min-h-[500px] sm:min-h-[600px] lg:min-h-[700px] items-center justify-center relative w-full py-8 sm:py-12 lg:py-16 px-4 sm:px-6 lg:px-8'>
             {/* Mascot character */}
             <div
-              className='absolute left-[-60px] w-[800px] h-[800px] top-[155px] bg-center bg-cover bg-no-repeat'
+              className='absolute left-[-20px] sm:left-[-45px] lg:left-[-60px] w-[300px] h-[300px] sm:w-[600px] sm:h-[600px] lg:w-[800px] lg:h-[800px] top-[80px] sm:top-[130px] lg:top-[155px] bg-center bg-cover bg-no-repeat opacity-30 sm:opacity-75 lg:opacity-100'
               style={{
                 backgroundImage: `url('${ASSETS.images.mascot}')`,
               }}
             />
 
             {/* Main title */}
-            <div className='text-bagel text-7xl leading-[1.1] text-[var(--color-figma-green-400)] text-center relative z-10'>
+            <div className='text-bagel text-5xl md:text-6xl lg:text-7xl leading-[1.1] text-[var(--color-figma-green-400)] text-center relative z-10'>
               <p className='block mb-0'>CASH IN!</p>
               <p className='block'>CRASH OUT.</p>
             </div>
 
             {/* Game interface */}
-            <div className='flex flex-col gap-2.5 items-start justify-start w-full max-w-[544px] relative z-10'>
+            <div className='flex flex-col gap-3 sm:gap-4 lg:gap-2.5 items-start justify-start w-full max-w-[320px] sm:max-w-[400px] md:max-w-[480px] lg:max-w-[544px] relative z-10'>
               {/* Token selection buttons */}
               <TokenSelector
                 tokens={tokensWithActiveState}
@@ -188,7 +186,8 @@ export default function Home() {
               />
 
               {/* Main game interface */}
-              <GameInterface
+              <MachineCard
+                machineId='home'
                 selectedToken={selectedToken}
                 selectedPercentage={selectedPercentage}
                 ballCount={ballCount}
@@ -199,13 +198,15 @@ export default function Home() {
             </div>
 
             {/* Purchase history sidebar */}
-            <div className='hidden xl:block absolute right-4 top-[156px] w-64 z-10'>
+            <div className='hidden xl:block absolute right-4 top-[100px] sm:top-[130px] lg:top-[156px] w-64 z-10'>
               <RecentActivityFeed activities={activities} />
             </div>
           </div>
 
           {/* UP FOR GRABS section */}
-          <UpForGrabsDisplay prizeAmount='$300,000' count={8} />
+          <div className='mt-8 sm:mt-12 lg:mt-16'>
+            <UpForGrabsDisplay prizeAmount='$300,000' count={8} />
+          </div>
         </div>
 
         {/* How it works section */}

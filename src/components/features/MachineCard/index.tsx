@@ -22,7 +22,7 @@ export function MachineCard({
   onBallCountChange,
 }: MachineCardProps) {
   return (
-    <div className='w-full max-w-[480px] mx-auto'>
+    <div className='w-full max-w-[320px] sm:max-w-[400px] md:max-w-[480px] lg:max-w-[544px] mx-auto'>
       <GameInterface
         selectedToken={selectedToken}
         selectedPercentage={selectedPercentage}

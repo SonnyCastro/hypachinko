@@ -54,13 +54,13 @@ export default function MachinesPage() {
         <div className='h-10 md:h-20 w-full' />
 
         {/* Main content container */}
-        <div className='flex flex-col gap-8 items-center justify-start w-full max-w-[1024px] px-4 py-8'>
+        <div className='flex flex-col gap-6 sm:gap-8 items-center justify-start w-full max-w-[1024px] px-4 py-8'>
           {/* Total for grabs section */}
           <div className='bg-[#3fefc0] flex flex-col gap-2 items-center justify-start py-2 px-2 rounded-lg w-full relative overflow-hidden'>
-            <div className='text-bagel text-2xl text-[#000000] text-center w-full leading-[1.1]'>
+            <div className='text-bagel text-xl sm:text-2xl md:text-[32px] text-[#000000] text-center w-full leading-[1.1]'>
               Total for grabs
             </div>
-            <div className='text-bagel text-5xl text-[#000000] text-center w-full leading-[normal]'>
+            <div className='text-bagel text-2xl sm:text-4xl md:text-5xl lg:text-[64px] text-[#000000] text-center w-full leading-[normal]'>
               $300,000
             </div>
 
@@ -80,7 +80,7 @@ export default function MachinesPage() {
           </div>
 
           {/* Machines Grid */}
-          <div className='grid grid-cols-1 lg:grid-cols-2 gap-8 w-full'>
+          <div className='grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 w-full mt-4 sm:mt-6'>
             {tokens.map((token) => (
               <MachineCard
                 key={token.id}

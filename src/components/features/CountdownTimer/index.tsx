@@ -8,10 +8,10 @@ interface CountdownTimerProps {
   format?: "HH:mm:ss" | "mm:ss"
 }
 
-export function CountdownTimer({ 
-  startTime, 
-  className = "", 
-  format = "HH:mm:ss" 
+export function CountdownTimer({
+  startTime,
+  className = "",
+  format = "HH:mm:ss",
 }: CountdownTimerProps) {
   const [timeLeft, setTimeLeft] = useState<string>("")
 
@@ -51,9 +51,5 @@ export function CountdownTimer({
     return () => clearInterval(timer)
   }, [startTime, format])
 
-  return (
-    <div className={`text-bagel text-[48px] w-full ${className}`}>
-      {timeLeft}
-    </div>
-  )
-} 
+  return <div className={`text-bagel w-full ${className}`}>{timeLeft}</div>
+}

@@ -1,5 +1,4 @@
 export { TokenSelector } from './TokenSelector';
-export { JackpotCountdown } from './JackpotCountdown';
 export { UpForGrabsDisplay } from './UpForGrabsDisplay';
 export { RecentActivityFeed } from './RecentActivityFeed';
 export { TokenJackpotCard } from './TokenJackpotCard';
