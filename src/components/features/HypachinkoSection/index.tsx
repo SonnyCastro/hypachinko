@@ -32,6 +32,11 @@ export function HypachinkoSection({ statistics }: HypachinkoSectionProps) {
                 loop
                 muted
                 playsInline
+                preload='auto'
+                webkit-playsinline='true'
+                x5-playsinline='true'
+                x5-video-player-type='h5'
+                x5-video-player-fullscreen='false'
               >
                 <source src={ASSETS.videos.mascot_jumping} type='video/mp4' />
                 Your browser does not support the video tag.
