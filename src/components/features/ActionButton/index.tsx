@@ -15,20 +15,28 @@ export function ActionButton({
 }: ActionButtonProps) {
   return (
     <button
-      className={`cursor-pointer bg-[var(--color-figma-green-400)] relative hover:opacity-90 transition-opacity outline-1 outline-offset-[-1px] outline-[var(--color-figma-green-200)] ${className}`}
+      className={`cursor-pointer bg-[var(--color-figma-green-400)] relative hover:opacity-90 transition-opacity rounded-[100px] w-full px-2 sm:px-4 py-2 sm:py-3 ${className}`}
       style={{
         boxShadow:
-          "0 4px 4px 0 rgba(255, 255, 255, 0.50) inset, 0 -4px 4px 0 rgba(0, 0, 0, 0.25) inset",
+          "0px 4px 4px 0px inset rgba(255,255,255,0.5), 0px -4px 4px 0px inset rgba(0,0,0,0.25)",
+        border: "1px solid var(--color-figma-green-200)",
       }}
       onClick={onClick}
     >
-      <div className='flex flex-row gap-2.5 items-center justify-center py-3'>
+      <div className='flex flex-row gap-1 sm:gap-2 items-center justify-center'>
         {icon && (
-          <div className='w-6 h-6 relative'>
-            <img src={icon} alt={text} className='w-full h-full' />
+          <div className='w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 relative'>
+            <img
+              src={icon}
+              alt={text}
+              className='w-full h-full object-contain'
+            />
           </div>
         )}
-        <div className='text-bagel font-normal text-xl sm:text-2xl lg:text-3xl text-[var(--color-figma-dark-600)] text-center leading-tight sm:leading-8'>
+        <div
+          className='text-instrument font-normal text-xs sm:text-sm md:text-base text-[var(--color-figma-dark-600)] text-center leading-[1.1] text-nowrap'
+          style={{ fontVariationSettings: "'wdth' 100" }}
+        >
           {text}
         </div>
       </div>

@@ -4,6 +4,7 @@ export const ASSETS = {
   icons: {
     usdt: '/icons/usdt-icon.svg',
     usdtBlack: '/icons/usdt-black.svg',
+    usdtAlt: '/icons/usdt-icon-alt.svg',
     sphere: '/icons/sphere-icon.svg',
     sphereSmall: '/icons/sphere-icon-small.svg',
     sphereAlt: '/icons/sphere-icon-alt.svg',
@@ -11,11 +12,11 @@ export const ASSETS = {
     alarm: '/icons/alarm-icon.svg',
     alarmAlt: '/icons/alarm-icon-alt.svg',
     trophy: '/icons/trophy-icon.svg',
+    skull: '/icons/skull-icon.svg',
     github: '/icons/github-icon.svg',
     x: '/icons/x-icon.svg',
     telegram: '/icons/telegram-icon.svg',
     wallet: '/icons/wallet-icon.svg',
-    usdtAlt: '/icons/usdt-icon-alt.svg',
     pokerChipPurple: '/icons/poker-chip-icon-purple.svg',
     pokerChipBlue: '/icons/poker-chip-icon-blue.svg',
     hyperliquid: '/icons/hyperliquid-icon.svg',
@@ -24,6 +25,12 @@ export const ASSETS = {
     gamepad: '/icons/device-gamepad.svg',
     group4: '/icons/group-4.svg',
     group5: '/icons/group-5.svg',
+    redSkull: '/icons/table-icon-skull.svg',
+    trophyFilled: '/icons/table-icon-trophy-filled.svg',
+    // New icons for SellingBallsModal
+    coingecko: '/icons/coingecko-icon.svg',
+    equal: '/icons/equal-icon.svg',
+    alertTriangle: '/icons/alert-triangle-icon.svg',
   },
 
   // Images

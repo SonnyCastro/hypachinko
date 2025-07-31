@@ -1,109 +1,149 @@
-import { type ClassValue, clsx } from 'clsx';
-import { twMerge } from 'tailwind-merge';
+import { clsx, type ClassValue } from "clsx"
+import { twMerge } from "tailwind-merge"
 
-/**
- * Utility function to merge Tailwind CSS classes
- */
 export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
+  return twMerge(clsx(inputs))
 }
 
 /**
- * Format currency values
+ * Truncates a wallet address to show first 6 and last 4 characters
+ * @param address - The full wallet address
+ * @param startLength - Number of characters to show at the start (default: 6)
+ * @param endLength - Number of characters to show at the end (default: 4)
+ * @returns Truncated address string
  */
-export function formatCurrency(amount: number, currency = 'USD'): string {
+export function truncateAddress(
+  address: string,
+  startLength: number = 6,
+  endLength: number = 4
+): string {
+  if (!address || address.length < startLength + endLength) {
+    return address
+  }
+
+  const start = address.slice(0, startLength)
+  const end = address.slice(-endLength)
+  return `${start}...${end}`
+}
+
+/**
+ * Formats a number with commas for thousands separators
+ * @param num - The number to format
+ * @returns Formatted number string
+ */
+export function formatNumber(num: number): string {
+  return num.toLocaleString()
+}
+
+/**
+ * Formats a currency value
+ * @param amount - The amount to format
+ * @param currency - The currency code (default: 'USD')
+ * @returns Formatted currency string
+ */
+export function formatCurrency(amount: number, currency: string = 'USD'): string {
   return new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency,
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 2,
-  }).format(amount);
+  }).format(amount)
 }
 
 /**
- * Format countdown timer
+ * Formats a percentage value
+ * @param value - The decimal value (0-1)
+ * @param decimals - Number of decimal places (default: 2)
+ * @returns Formatted percentage string
  */
-export function formatCountdown(seconds: number): string {
-  const hours = Math.floor(seconds / 3600);
-  const minutes = Math.floor((seconds % 3600) / 60);
-  const secs = seconds % 60;
-
-  return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+export function formatPercentage(value: number, decimals: number = 2): string {
+  return `${(value * 100).toFixed(decimals)}%`
 }
 
 /**
- * Truncate wallet address for display
+ * Capitalizes the first letter of a string
+ * @param str - The string to capitalize
+ * @returns Capitalized string
  */
-export function truncateAddress(address: string, length = 6): string {
-  if (!address) return '';
-  return `${address.slice(0, length)}...${address.slice(-length)}`;
+export function capitalize(str: string): string {
+  return str.charAt(0).toUpperCase() + str.slice(1)
 }
 
 /**
- * Generate random ID
+ * Converts a string to title case
+ * @param str - The string to convert
+ * @returns Title case string
  */
-export function generateId(): string {
-  return Math.random().toString(36).substring(2) + Date.now().toString(36);
+export function toTitleCase(str: string): string {
+  return str.replace(/\w\S*/g, (txt) =>
+    txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
+  )
 }
 
 /**
- * Debounce function
+ * Debounces a function call
+ * @param func - The function to debounce
+ * @param wait - The delay in milliseconds
+ * @returns Debounced function
  */
-export function debounce<T extends (...args: unknown[]) => unknown>(
+export function debounce<T extends (...args: any[]) => any>(
   func: T,
   wait: number
 ): (...args: Parameters<T>) => void {
-  let timeout: NodeJS.Timeout;
+  let timeout: NodeJS.Timeout
   return (...args: Parameters<T>) => {
-    clearTimeout(timeout);
-    timeout = setTimeout(() => func(...args), wait);
-  };
-}
-
-/**
- * Check if user is on mobile device
- */
-export function isMobile(): boolean {
-  if (typeof window === 'undefined') return false;
-  return window.innerWidth < 768;
-}
-
-/**
- * Copy text to clipboard
- */
-export async function copyToClipboard(text: string): Promise<boolean> {
-  try {
-    await navigator.clipboard.writeText(text);
-    return true;
-  } catch (error) {
-    console.error('Failed to copy text:', error);
-    return false;
+    clearTimeout(timeout)
+    timeout = setTimeout(() => func(...args), wait)
   }
 }
 
 /**
- * Validate wallet address format
+ * Throttles a function call
+ * @param func - The function to throttle
+ * @param limit - The time limit in milliseconds
+ * @returns Throttled function
  */
-export function isValidWalletAddress(address: string): boolean {
-  return /^0x[a-fA-F0-9]{40}$/.test(address);
+export function throttle<T extends (...args: any[]) => any>(
+  func: T,
+  limit: number
+): (...args: Parameters<T>) => void {
+  let inThrottle: boolean
+  return (...args: Parameters<T>) => {
+    if (!inThrottle) {
+      func(...args)
+      inThrottle = true
+      setTimeout(() => (inThrottle = false), limit)
+    }
+  }
 }
 
 /**
- * Sleep utility for async operations
+ * Generates a random string of specified length
+ * @param length - The length of the string to generate
+ * @returns Random string
+ */
+export function generateRandomString(length: number): string {
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+  let result = ''
+  for (let i = 0; i < length; i++) {
+    result += chars.charAt(Math.floor(Math.random() * chars.length))
+  }
+  return result
+}
+
+/**
+ * Checks if a value is a valid email address
+ * @param email - The email to validate
+ * @returns Boolean indicating if email is valid
+ */
+export function isValidEmail(email: string): boolean {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+  return emailRegex.test(email)
+}
+
+/**
+ * Sleeps for a specified number of milliseconds
+ * @param ms - Milliseconds to sleep
+ * @returns Promise that resolves after the delay
  */
 export function sleep(ms: number): Promise<void> {
-  return new Promise(resolve => setTimeout(resolve, ms));
+  return new Promise(resolve => setTimeout(resolve, ms))
 }
-
-/**
- * Get color class based on ball color
- */
-export function getBallColorClass(color: string): string {
-  const colorMap: Record<string, string> = {
-    blue: 'bg-blue-500',
-    red: 'bg-red-500',
-    green: 'bg-green-500',
-    yellow: 'bg-yellow-500',
-  };
-  return colorMap[color] || 'bg-gray-500';
-} 

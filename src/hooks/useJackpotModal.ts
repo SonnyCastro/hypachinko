@@ -1,14 +1,5 @@
-import { useState } from "react"
+import { useModal } from "./useModal"
 
 export function useJackpotModal() {
-  const [isModalOpen, setIsModalOpen] = useState(false)
-
-  const openModal = () => setIsModalOpen(true)
-  const closeModal = () => setIsModalOpen(false)
-
-  return {
-    isModalOpen,
-    openModal,
-    closeModal,
-  }
+  return useModal<any>()
 } 
