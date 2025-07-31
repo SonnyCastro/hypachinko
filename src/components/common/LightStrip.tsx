@@ -21,7 +21,7 @@ export function LightStrip({
   useEffect(() => {
     const interval = setInterval(() => {
       setActiveLightIndex((prev) => (prev + 1) % totalLights)
-    }, 500)
+    }, 350)
 
     return () => clearInterval(interval)
   }, [])

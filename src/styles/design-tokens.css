@@ -49,17 +49,4 @@
   text-transform: uppercase;
 }
 
-/* Animation keyframes */
-@keyframes scroll {
-  from {
-    transform: translateX(0);
-  }
-
-  to {
-    transform: translateX(-50%);
-  }
-}
-
-.animate-scroll {
-  animation: scroll 20s linear infinite;
-}
+/* Animation keyframes - moved to globals.css for better organization */

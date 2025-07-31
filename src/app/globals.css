@@ -82,12 +82,12 @@ body {
     transform: translateX(0);
   }
   100% {
-    transform: translateX(-50%);
+    transform: translateX(-33.333%);
   }
 }
 
 .animate-scroll {
-  animation: scroll 20s linear infinite;
+  animation: scroll 3s linear infinite; /* Default for mobile */
 }
 
 /* Responsive utilities */
@@ -106,5 +106,9 @@ body {
 @media (min-width: 1024px) {
   .container {
     padding: 0 2rem;
+  }
+  
+  .animate-scroll {
+    animation-duration: 5s;
   }
 }
