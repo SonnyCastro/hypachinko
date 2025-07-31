@@ -1,11 +1,11 @@
 import { useState, useCallback } from "react"
 
-export interface ModalState<T = any> {
+export interface ModalState<T = unknown> {
   isOpen: boolean
   data: T | null
 }
 
-export interface UseModalReturn<T = any> {
+export interface UseModalReturn<T = unknown> {
   isOpen: boolean
   data: T | null
   openModal: (data?: T) => void
@@ -13,7 +13,7 @@ export interface UseModalReturn<T = any> {
   updateData: (data: T) => void
 }
 
-export function useModal<T = any>(): UseModalReturn<T> {
+export function useModal<T = unknown>(): UseModalReturn<T> {
   const [modalState, setModalState] = useState<ModalState<T>>({
     isOpen: false,
     data: null,
@@ -51,11 +51,16 @@ export function useModal<T = any>(): UseModalReturn<T> {
 
 // Specific modal hooks for common use cases
 export function useSellingBallsModal() {
-  return useModal<any>()
+  return useModal<{
+    balls?: number
+    jackpot?: number
+    odds?: number
+    [key: string]: unknown
+  }>()
 }
 
 export function useJackpotModal() {
-  return useModal<any>()
+  return useModal<unknown>()
 }
 
 export function useConfirmationModal() {

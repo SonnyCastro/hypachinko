@@ -103,7 +103,7 @@ const columns: ColumnDef<LeaderboardEntry>[] = [
     accessorKey: "machinesUsed",
     header: "Machines Used",
     meta: { flex: "1" },
-    cell: ({ row }) => (
+    cell: () => (
       <div className='basis-0 flex flex-row gap-2.5 grow h-full items-center justify-center min-h-px min-w-px px-2 py-0 relative'>
         <div className='flex flex-row-reverse items-center justify-start pl-0 pr-2 py-0'>
           <div className='mr-[-8px] order-2 relative shrink-0 w-6 h-6 sm:w-8 sm:h-8'>

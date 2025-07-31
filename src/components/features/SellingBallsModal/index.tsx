@@ -5,16 +5,21 @@ import { Modal } from "@/components/ui/Modal"
 import { ASSETS } from "@/constants/assets"
 
 interface BallData {
+  id?: string
+  coin?: string
   balls?: number
   jackpot?: number
   odds?: number
-  [key: string]: any
+  status?: string
+  action?: string
+  timeRemaining?: string
+  [key: string]: unknown
 }
 
 interface SellingBallsModalProps {
   isOpen: boolean
   onClose: () => void
-  ballData?: BallData
+  ballData?: BallData | null
 }
 
 export function SellingBallsModal({
@@ -55,11 +60,6 @@ export function SellingBallsModal({
     const priceNum = parseFloat(priceValue) || 0
     if (priceNum === 0) return "0"
     return Math.round((priceNum / currentValue) * 100).toString()
-  }
-
-  const handleSell = () => {
-    console.log("Selling balls for:", price)
-    onClose()
   }
 
   const handleBack = () => {

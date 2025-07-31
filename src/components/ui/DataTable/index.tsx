@@ -11,14 +11,6 @@ import {
 } from "@tanstack/react-table"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table"
 import { Button } from "@/components/ui/Button"
 
 interface DataTableProps<TData, TValue> {
@@ -34,7 +26,7 @@ interface DataTableProps<TData, TValue> {
 
 // Extend the column meta type to include our custom properties
 declare module "@tanstack/table-core" {
-  interface ColumnMeta<TData extends unknown, TValue> {
+  interface ColumnMeta<TData, TValue> {
     width?: string
     flex?: string
   }

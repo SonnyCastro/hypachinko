@@ -17,6 +17,7 @@ interface BallEntry {
   status: "active" | "selling" | "won" | "expired"
   action: "sell" | "cancel" | "claim" | "none"
   timeRemaining?: string
+  [key: string]: unknown
 }
 
 // Generate dummy data
@@ -141,7 +142,7 @@ export function MyBallsTable() {
     closeModal,
   } = useSellingBallsModal()
 
-  const handleSellClick = (ballData: any) => {
+  const handleSellClick = (ballData: BallEntry) => {
     openModal(ballData)
   }
 
@@ -151,14 +152,14 @@ export function MyBallsTable() {
     ballData,
   }: {
     action: BallEntry["action"]
-    ballData?: any
+    ballData?: BallEntry
   }) => {
     switch (action) {
       case "sell":
         return (
           <button
             className='bg-[rgba(248,170,255,0.3)] flex flex-row items-center justify-center px-3 sm:px-4 py-2 rounded-[100px] w-[120px] sm:w-[140px] hover:opacity-90 cursor-pointer transition-opacity'
-            onClick={() => handleSellClick(ballData)}
+            onClick={() => handleSellClick(ballData!)}
           >
             <div className='text-instrument font-normal text-xs sm:text-sm md:text-base text-[#f8aaff] text-center text-nowrap'>
               SELL

@@ -51,7 +51,7 @@ export function GameInterface({
   const currentTokenData = tokenData || defaultTokenData
 
   // Modal state
-  const { isModalOpen, openModal, closeModal } = useJackpotModal()
+  const { isOpen, openModal, closeModal } = useJackpotModal()
 
   return (
     <div className='min-h-[400px] sm:min-h-[500px] lg:min-h-[564px] relative rounded-bl-[24px] sm:rounded-bl-[32px] lg:rounded-bl-[48px] rounded-br-[24px] sm:rounded-br-[32px] lg:rounded-br-[48px] rounded-tl-[4px] sm:rounded-tl-[6px] lg:rounded-tl-[8px] rounded-tr-[4px] sm:rounded-tr-[6px] lg:rounded-tr-[8px] w-full border-2 sm:border-3 lg:border-4 border-[#dedede] bg-[var(--color-figma-dark-600)] overflow-hidden'>
@@ -232,7 +232,7 @@ export function GameInterface({
 
       {/* Jackpot Distribution Modal */}
       <JackpotDistributionModal
-        isOpen={isModalOpen}
+        isOpen={isOpen}
         onClose={closeModal}
         totalJackpot={currentTokenData.jackpotAmount}
       />
