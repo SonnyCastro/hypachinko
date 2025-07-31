@@ -24,11 +24,19 @@ export function HypachinkoSection({ statistics }: HypachinkoSectionProps) {
         <div className='flex flex-col lg:flex-row gap-8 lg:gap-6 items-start justify-center w-full'>
           {/* Left Column - Image and Description */}
           <div className='flex flex-col gap-8 items-start justify-center w-full max-w-[628px]'>
-            {/* Gameplay Image */}
-            <div
-              className='w-full h-[200px] sm:h-[250px] md:h-[300px] lg:h-[332px] rounded-2xl bg-center bg-cover bg-no-repeat'
-              style={{ backgroundImage: `url('${ASSETS.images.gameplay}')` }}
-            />
+            {/* Gameplay Video */}
+            <div className='w-full h-[200px] sm:h-[250px] md:h-[300px] lg:h-[332px] rounded-2xl overflow-hidden'>
+              <video
+                className='w-full h-full object-cover'
+                autoPlay
+                loop
+                muted
+                playsInline
+              >
+                <source src={ASSETS.videos.mascot_jumping} type='video/mp4' />
+                Your browser does not support the video tag.
+              </video>
+            </div>
 
             {/* Description */}
             <div className='flex flex-col gap-4 items-start justify-start w-full'>

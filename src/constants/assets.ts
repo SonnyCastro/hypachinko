@@ -33,6 +33,11 @@ export const ASSETS = {
     mascot_playing: '/images/mascot-playing.png',
   },
 
+  // Videos
+  videos: {
+    mascot_jumping: '/videos/mascot_jumping.mp4',
+  },
+
   // Logos
   logos: {
     hypachinko: '/logos/hypachinko-logo.svg',
