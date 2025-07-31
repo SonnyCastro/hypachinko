@@ -2,6 +2,7 @@
 
 import { ASSETS } from "@/constants/assets"
 import { StatisticCard } from "../StatisticCard"
+import { useEffect, useRef, useState } from "react"
 
 interface HypachinkoSectionProps {
   statistics: Array<{
@@ -12,6 +13,33 @@ interface HypachinkoSectionProps {
 }
 
 export function HypachinkoSection({ statistics }: HypachinkoSectionProps) {
+  const videoRef = useRef<HTMLVideoElement>(null)
+  const [hasInteracted, setHasInteracted] = useState(false)
+
+  useEffect(() => {
+    const handleUserInteraction = () => {
+      if (!hasInteracted && videoRef.current) {
+        setHasInteracted(true)
+        videoRef.current.play().catch(() => {
+          // Silently handle play errors
+        })
+      }
+    }
+
+    // Listen for various user interactions
+    const events = ["touchstart", "scroll", "click", "keydown"]
+
+    events.forEach((event) => {
+      document.addEventListener(event, handleUserInteraction, { once: true })
+    })
+
+    return () => {
+      events.forEach((event) => {
+        document.removeEventListener(event, handleUserInteraction)
+      })
+    }
+  }, [hasInteracted])
+
   return (
     <section className='w-full flex flex-col items-center justify-center pb-20 pt-4 md:py-24'>
       <div className='max-w-[1280px] w-full px-4'>
@@ -27,8 +55,8 @@ export function HypachinkoSection({ statistics }: HypachinkoSectionProps) {
             {/* Gameplay Video */}
             <div className='w-full h-[200px] sm:h-[250px] md:h-[300px] lg:h-[332px] rounded-2xl overflow-hidden'>
               <video
+                ref={videoRef}
                 className='w-full h-full object-cover'
-                autoPlay
                 loop
                 muted
                 playsInline
