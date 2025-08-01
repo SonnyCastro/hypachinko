@@ -1,6 +1,8 @@
 import type { Metadata } from "next"
 import { Geist, Geist_Mono } from "next/font/google"
-import { Menu, Footer } from "@/components/layout"
+import { Footer } from "@/components/layout/Footer"
+import { Menu } from "@/components/layout/Menu"
+import { Providers } from "./providers"
 import "./globals.css"
 
 // Import your custom fonts using Next.js font optimization
@@ -48,9 +50,11 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${instrumentSans.variable} ${bagelFatOne.variable} antialiased bg-[#171717] text-white`}
       >
-        <Menu />
-        <main className='min-h-screen'>{children}</main>
-        <Footer />
+        <Providers>
+          <Menu />
+          <main className='min-h-screen'>{children}</main>
+          <Footer />
+        </Providers>
       </body>
     </html>
   )

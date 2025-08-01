@@ -216,3 +216,40 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+/* Custom ConnectButton styling to match Figma design */
+[data-testid="rk-connect-button"] {
+  background: var(--color-figma-green-400) !important;
+  border-radius: 100px !important;
+  border: 1px solid var(--color-figma-green-200) !important;
+  font-family: var(--font-instrument), system-ui, sans-serif !important;
+  font-variation-settings: "wdth" 100 !important;
+  font-size: 16px !important;
+  font-weight: normal !important;
+  color: var(--color-figma-dark-600) !important;
+  box-shadow: 0px 4px 4px 0px inset rgba(255, 255, 255, 0.5),
+    0px -4px 4px 0px inset rgba(0, 0, 0, 0.25) !important;
+  padding: 12px 16px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  transition: background-color 0.2s ease !important;
+}
+
+[data-testid="rk-connect-button"]:hover {
+  background: #2dd4a8 !important;
+}
+
+/* Add wallet icon to Connect Wallet button */
+[data-testid="rk-connect-button"]::before {
+  content: "";
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  background-image: url("/icons/wallet-icon.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  flex-shrink: 0;
+}

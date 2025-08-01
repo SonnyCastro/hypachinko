@@ -10,7 +10,7 @@ import {
   HowItWorksSection,
   HypachinkoSection,
   MachineCard,
-} from "@/components/features"
+} from "@/components/features/index"
 
 export default function Home() {
   // Game state management with custom hook
