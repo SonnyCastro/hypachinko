@@ -45,7 +45,7 @@ export default function MachinesPage() {
       <div
         className='hidden xl:block absolute bg-center bg-cover bg-no-repeat bottom-4 right-[-186px] w-[800px] h-[800px]'
         style={{
-          backgroundImage: `url('${ASSETS.images.mascot_playing}')`,
+          backgroundImage: `url('${ASSETS.images.mascotPlaying}')`,
         }}
       />
 

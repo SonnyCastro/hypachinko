@@ -77,4 +77,27 @@ export type Theme = 'light' | 'dark' | 'system';
 export interface ThemeContextType {
   theme: Theme;
   setTheme: (theme: Theme) => void;
-} 
+}
+
+// Marketplace types
+export interface MarketplaceItem {
+  id: string
+  token: string
+  ballsCount: string
+  price: string
+  timeLeft: string
+  priceChange: {
+    percentage: string
+    isPositive: boolean
+  }
+  backgroundImage: string
+  tokenIcon: string
+}
+
+export interface MarketplaceFilters {
+  selectedToken: string
+  sortBy: 'price' | 'timeLeft'
+  sortOrder: 'asc' | 'desc'
+}
+
+export type TokenType = 'all' | 'usdt0' | 'hype' | 'tkn' 

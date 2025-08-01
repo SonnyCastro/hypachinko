@@ -31,13 +31,20 @@ export const ASSETS = {
     coingecko: '/icons/coingecko-icon.svg',
     equal: '/icons/equal-icon.svg',
     alertTriangle: '/icons/alert-triangle-icon.svg',
+    circleUp: '/icons/circle-arrow-up.svg',
+    circleDown: '/icons/circle-arrow-down.svg',
+    chevronUp: '/icons/chevron-up.svg',
   },
 
   // Images
   images: {
     mascot: '/images/mascot-hypachinko.png',
     gameplay: '/images/hypachinko-gameplay.png',
-    mascot_playing: '/images/mascot-playing.png',
+    mascotPlaying: '/images/mascot-playing.png',
+    blueBallsTicket: '/images/blue-balls-ticket.png',
+    greenBallsTicket: '/images/green-balls-ticket.png',
+    yellowBallsTicket: '/images/yellow-balls-ticket.png',
+    purpleBallsTicket: '/images/purple-balls-ticket.png',
   },
 
   // Videos
