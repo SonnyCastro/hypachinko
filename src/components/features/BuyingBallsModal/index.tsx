@@ -92,7 +92,7 @@ export function BuyingBallsModal({
                 Buying Balls
               </div>
               <div className='text-instrument font-normal text-[16px] text-[#dedede] w-full'>
-                That's a nice bag of balls you're buying.
+                That&apos;s a nice bag of balls you&apos;re buying.
               </div>
             </div>
             <button

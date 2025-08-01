@@ -10,12 +10,6 @@ interface MarketplaceCardProps {
 }
 
 export function MarketplaceCard({ item, onClick }: MarketplaceCardProps) {
-  const handleBuyBalls = (e: React.MouseEvent) => {
-    e.stopPropagation()
-    // TODO: Implement buy balls functionality
-    console.log("Buy balls clicked for item:", item.id)
-  }
-
   // Determine which price change icon to use
   const getPriceChangeIcon = () => {
     if (item.priceChange.percentage.startsWith("+")) {

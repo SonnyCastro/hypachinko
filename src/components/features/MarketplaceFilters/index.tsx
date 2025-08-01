@@ -1,7 +1,7 @@
 "use client"
 
 import React from "react"
-import type { MarketplaceFilters, TokenType } from "@/types"
+import type { MarketplaceFilters } from "@/types"
 import { TOKEN_FILTERS, SORT_OPTIONS } from "@/constants/marketplace"
 import { ASSETS } from "@/constants/assets"
 
@@ -36,7 +36,6 @@ export function MarketplaceFilters({
       {/* Token Filters */}
       <div className='flex flex-wrap gap-2 items-center justify-start w-full sm:w-auto'>
         {TOKEN_FILTERS.map((token) => {
-          const isActive = filters.selectedToken === token.id
           return (
             <button
               key={token.id}
@@ -44,7 +43,7 @@ export function MarketplaceFilters({
               className={`
                 flex flex-row gap-1.5 items-center justify-center px-4 py-2 rounded-[100px] h-10 sm:h-12 transition-all duration-200 relative min-w-[70px] sm:min-w-[90px]
                 ${
-                  isActive
+                  filters.selectedToken === token.id
                     ? "bg-[#3fefc0] text-[#1b0e18]"
                     : "bg-[rgba(63,239,192,0.2)] text-[#3fefc0]"
                 }
@@ -55,7 +54,7 @@ export function MarketplaceFilters({
                 <div className='overflow-clip relative shrink-0 w-4 h-4 sm:w-5 sm:h-5'>
                   <img
                     src={
-                      isActive && token.id === "usdt0"
+                      filters.selectedToken === "usdt0" && token.id === "usdt0"
                         ? ASSETS.icons.usdtBlack
                         : token.icon
                     }
@@ -69,7 +68,11 @@ export function MarketplaceFilters({
               <div
                 className={`
                   text-instrument font-normal leading-[1.1] relative shrink-0 text-sm sm:text-base text-center uppercase
-                  ${isActive ? "text-[#1b0e18]" : "text-[#3fefc0]"}
+                  ${
+                    filters.selectedToken === token.id
+                      ? "text-[#1b0e18]"
+                      : "text-[#3fefc0]"
+                  }
                 `}
               >
                 {token.name}
@@ -82,7 +85,6 @@ export function MarketplaceFilters({
       {/* Sort Options - Positioned on the right */}
       <div className='flex flex-row gap-2 items-center justify-start w-full sm:w-auto'>
         {SORT_OPTIONS.map((option) => {
-          const isActive = filters.sortBy === option.id
           const isDesc =
             filters.sortBy === option.id && filters.sortOrder === "desc"
 
