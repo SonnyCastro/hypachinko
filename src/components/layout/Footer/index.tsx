@@ -44,7 +44,7 @@ export function Footer({ className }: FooterProps) {
           <img src={githubIcon} alt='GitHub' className='w-full h-full' />
         </a>
         <a
-          href='https://x.com'
+          href='https://x.com/hypachinko'
           target='_blank'
           rel='noopener noreferrer'
           className='w-6 h-6 relative hover:opacity-80 transition-opacity'
