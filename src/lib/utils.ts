@@ -1,8 +1,78 @@
-import { clsx, type ClassValue } from "clsx"
+import { type ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
+}
+
+// Lottery game utilities
+export function formatTimeRemaining(seconds: number): string {
+  if (seconds <= 0) return "00:00:00"
+
+  const hours = Math.floor(seconds / 3600)
+  const minutes = Math.floor((seconds % 3600) / 60)
+  const secs = seconds % 60
+
+  return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`
+}
+
+export function formatCurrency(amount: string | number, decimals: number = 2): string {
+  const num = typeof amount === 'string' ? parseFloat(amount) : amount
+  return new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    minimumFractionDigits: decimals,
+    maximumFractionDigits: decimals,
+  }).format(num)
+}
+
+export function formatNumber(num: string | number, decimals: number = 0): string {
+  const number = typeof num === 'string' ? parseFloat(num) : num
+  return new Intl.NumberFormat('en-US', {
+    minimumFractionDigits: decimals,
+    maximumFractionDigits: decimals,
+  }).format(number)
+}
+
+export function shortenAddress(address: string, chars: number = 4): string {
+  if (!address) return ''
+  return `${address.slice(0, chars + 2)}...${address.slice(-chars)}`
+}
+
+export function calculateProbability(probability: string): number {
+  const prob = parseFloat(probability)
+  return prob / 100 // Convert from basis points to percentage
+}
+
+export function isRoundActive(timeRemaining: string | number): boolean {
+  const time = typeof timeRemaining === 'string' ? parseInt(timeRemaining) : timeRemaining
+  return time > 0
+}
+
+export function canBuyTicket(
+  timeRemaining: string | number,
+  roundEnded: boolean,
+  userBalance: string,
+  ticketPrice: string
+): boolean {
+  const time = typeof timeRemaining === 'string' ? parseInt(timeRemaining) : timeRemaining
+  const balance = parseFloat(userBalance)
+  const price = parseFloat(ticketPrice)
+
+  return time > 0 && !roundEnded && balance >= price
+}
+
+export function getProbabilityColor(probability: number): string {
+  if (probability >= 10) return 'text-green-500'
+  if (probability >= 5) return 'text-yellow-500'
+  if (probability >= 1) return 'text-orange-500'
+  return 'text-red-500'
+}
+
+export function getProbabilityBarWidth(probability: number): string {
+  // Cap at 100% for display purposes
+  const capped = Math.min(probability, 100)
+  return `${capped}%`
 }
 
 /**
@@ -24,38 +94,6 @@ export function truncateAddress(
   const start = address.slice(0, startLength)
   const end = address.slice(-endLength)
   return `${start}...${end}`
-}
-
-/**
- * Formats a number with commas for thousands separators
- * @param num - The number to format
- * @returns Formatted number string
- */
-export function formatNumber(num: number): string {
-  return num.toLocaleString()
-}
-
-/**
- * Formats a currency value
- * @param amount - The amount to format
- * @param currency - The currency code (default: 'USD')
- * @returns Formatted currency string
- */
-export function formatCurrency(amount: number, currency: string = 'USD'): string {
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency,
-  }).format(amount)
-}
-
-/**
- * Formats a percentage value
- * @param value - The decimal value (0-1)
- * @param decimals - Number of decimal places (default: 2)
- * @returns Formatted percentage string
- */
-export function formatPercentage(value: number, decimals: number = 2): string {
-  return `${(value * 100).toFixed(decimals)}%`
 }
 
 /**

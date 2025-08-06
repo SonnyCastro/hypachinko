@@ -32,12 +32,12 @@ declare module "@tanstack/table-core" {
   }
 }
 
-export function DataTable<TData, TValue>({
+export function DataTable<TData>({
   columns,
   data,
   itemsPerPage = 10,
   responsiveBreakpoints,
-}: DataTableProps<TData, TValue>) {
+}: DataTableProps<TData, unknown>) {
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
 
   // Set up responsive column visibility

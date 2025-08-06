@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google"
 import { Footer } from "@/components/layout/Footer"
 import { Menu } from "@/components/layout/Menu"
 import { Providers } from "./providers"
+import BlockchainData from "@/components/BlockchainData"
 import "./globals.css"
 
 // Import your custom fonts using Next.js font optimization
@@ -51,6 +52,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} ${instrumentSans.variable} ${bagelFatOne.variable} antialiased bg-[#171717] text-white`}
       >
         <Providers>
+          <BlockchainData />
           <Menu />
           <main className='min-h-screen'>{children}</main>
           <Footer />
