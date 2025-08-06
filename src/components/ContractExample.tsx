@@ -35,9 +35,9 @@ const ContractExample: React.FC = () => {
           ])
 
           setGameData({
-            currentRound,
-            ticketPrice,
-            totalPrize,
+            currentRound: currentRound as bigint,
+            ticketPrice: ticketPrice as bigint,
+            totalPrize: totalPrize as bigint,
             userTickets: [],
           })
 
@@ -48,7 +48,10 @@ const ContractExample: React.FC = () => {
                 contracts.lotteryPot,
                 address
               )
-              setGameData((prev) => ({ ...prev, userTickets }))
+              setGameData((prev) => ({
+                ...prev,
+                userTickets: userTickets as bigint[],
+              }))
             } catch (error) {
               console.error("Error loading user tickets:", error)
             }
@@ -71,7 +74,7 @@ const ContractExample: React.FC = () => {
       console.log("Ticket purchased:", receipt)
       // Refresh user tickets after purchase
       const userTickets = await getUserTickets(contracts.lotteryPot, address)
-      setGameData((prev) => ({ ...prev, userTickets }))
+      setGameData((prev) => ({ ...prev, userTickets: userTickets as bigint[] }))
     } catch (error) {
       console.error("Error buying ticket:", error)
     } finally {

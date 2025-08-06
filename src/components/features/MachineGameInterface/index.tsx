@@ -5,10 +5,11 @@ import { formatCurrency, formatNumber } from "@/lib/utils"
 import { StatisticCard } from "../StatisticCard"
 import { ActionButton } from "../ActionButton"
 import { ASSETS } from "@/constants/assets"
+import { GameState } from "@/types/game"
 
 interface MachineGameInterfaceProps {
   machineId: string
-  gameState: any // We'll pass the gameState from the parent
+  gameState: GameState // Fixed: replaced 'any' with proper GameState type
   onBuyTicket?: () => void
 }
 

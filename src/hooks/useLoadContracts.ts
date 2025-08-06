@@ -1,6 +1,6 @@
-import { useCallback, useMemo, useRef } from 'react'
+import { useCallback, useMemo } from 'react'
 import { useAccount, usePublicClient, useWalletClient } from 'wagmi'
-import { getContract } from 'viem'
+import { getContract, type Abi } from 'viem'
 import { CONTRACT_CONFIGS } from '@/constants/contracts'
 import { throttleRequest } from '@/lib/utils/requestThrottler'
 
@@ -78,7 +78,7 @@ export function useLoadContracts() {
 
   // Stable multicall function
   const stableMulticall = useCallback(async <T = unknown>(
-    contracts: Array<{ address: `0x${string}`; abi: readonly any[]; functionName: string; args?: readonly unknown[] }>
+    contracts: Array<{ address: `0x${string}`; abi: Abi; functionName: string; args?: readonly unknown[] }>
   ): Promise<Array<{ data: T; status: 'success' } | { error: string; status: 'failure' }>> => {
     if (!publicClient) {
       throw new Error('Public client not available')
@@ -160,7 +160,7 @@ export function useLoadContracts() {
   }, [contracts, stableMulticall])
 
   // Throttled read functions (keeping for backward compatibility)
-  const readContract = useCallback(async (contractName: keyof typeof contracts, functionName: string, args: any[] = []) => {
+  const readContract = useCallback(async (contractName: keyof typeof contracts, functionName: string, args: readonly unknown[] = []) => {
     const contract = contracts[contractName]
     if (!contract) throw new Error(`Contract ${contractName} not available`)
 
@@ -168,7 +168,7 @@ export function useLoadContracts() {
       `${contractName}_${functionName}`,
       async () => {
         try {
-          return await (contract.read as any)[functionName](args)
+          return await (contract.read as Record<string, (...args: readonly unknown[]) => Promise<unknown>>)[functionName](args)
         } catch (error) {
           console.warn(`Function ${functionName} not found on ${contractName} contract:`, error)
           // Return default values based on function name
@@ -191,7 +191,7 @@ export function useLoadContracts() {
   }, [contracts])
 
   // Write functions using wallet client directly
-  const writeContract = useCallback(async (contractName: keyof typeof contracts, functionName: string, args: any[] = []) => {
+  const writeContract = useCallback(async (contractName: keyof typeof contracts, functionName: string, args: readonly unknown[] = []) => {
     const contract = contracts[contractName]
     if (!contract) throw new Error(`Contract ${contractName} not available`)
     if (!account) throw new Error('No account connected')
@@ -200,8 +200,8 @@ export function useLoadContracts() {
     return walletClient.writeContract({
       address: contract.address,
       abi: contract.abi,
-      functionName: functionName as any,
-      args: args as any,
+      functionName: functionName as never,
+      args: args as never,
       account,
     })
   }, [contracts, account, walletClient])
@@ -285,11 +285,11 @@ export function useLotteryPotContract() {
   }, [readContract, account])
 
   const getTicketsForSale = useCallback(async () => {
-    return readContract('lotteryPot', 'getTicketsForSale') as Promise<any[]>
+    return readContract('lotteryPot', 'getTicketsForSale') as Promise<unknown[]>
   }, [readContract])
 
   const getRoundData = useCallback(async (round: bigint) => {
-    return readContract('lotteryPot', 'rounds', [round]) as Promise<any>
+    return readContract('lotteryPot', 'rounds', [round]) as Promise<unknown>
   }, [readContract])
 
   const buyTicket = useCallback(async () => {
@@ -361,7 +361,7 @@ export function usePaymentTokenContract() {
 }
 
 export function usePballsContract() {
-  const { contracts, readContract, batchReadContract, writeContract, account, isReady } = useLoadContracts()
+  const { contracts, readContract, batchReadContract, account, isReady } = useLoadContracts()
 
   // Batch read pBALLS data
   const batchReadPballsData = useCallback(async (address?: string) => {
@@ -383,7 +383,7 @@ export function usePballsContract() {
       totalSupply: results[0] as bigint,
       currentMultiplier: results[1] as bigint,
       balance: address ? (results[2] as bigint) : BigInt(0),
-      userStats: address ? (results[3] as any) : null,
+      userStats: address ? (results[3] as unknown) : null,
     }
   }, [batchReadContract])
 
@@ -396,7 +396,7 @@ export function usePballsContract() {
   }, [readContract])
 
   const getUserStats = useCallback(async (address: string) => {
-    return readContract('pballsToken', 'getUserStats', [address]) as Promise<any>
+    return readContract('pballsToken', 'getUserStats', [address]) as Promise<unknown>
   }, [readContract])
 
   const totalMinted = useCallback(async () => {
@@ -416,7 +416,7 @@ export function usePballsContract() {
 }
 
 export function useLotteryTicketContract(ticketContractAddress?: string) {
-  const { readContract, writeContract, account, isReady } = useLoadContracts()
+  const { account } = useLoadContracts()
   const publicClient = usePublicClient()
   const { data: walletClient } = useWalletClient()
 
@@ -434,16 +434,16 @@ export function useLotteryTicketContract(ticketContractAddress?: string) {
 
   const contract = createTicketContract()
 
-  const readTicketContract = useCallback(async (functionName: string, args: any[] = []) => {
+  const readTicketContract = useCallback(async (functionName: string, args: readonly unknown[] = []) => {
     if (!contract) throw new Error('Lottery ticket contract not available')
 
     return throttleRequest(
       `lotteryTicket_${functionName}`,
-      () => (contract.read as any)[functionName](args)
+      () => (contract.read as Record<string, (...args: readonly unknown[]) => Promise<unknown>>)[functionName](args)
     )
   }, [contract])
 
-  const writeTicketContract = useCallback(async (functionName: string, args: any[] = []) => {
+  const writeTicketContract = useCallback(async (functionName: string, args: readonly unknown[] = []) => {
     if (!contract) throw new Error('Lottery ticket contract not available')
     if (!account) throw new Error('No account connected')
     if (!walletClient) throw new Error('Wallet client not available')
@@ -451,8 +451,8 @@ export function useLotteryTicketContract(ticketContractAddress?: string) {
     return walletClient.writeContract({
       address: contract.address,
       abi: contract.abi,
-      functionName: functionName as any,
-      args: args as any,
+      functionName: functionName as never,
+      args: args as never,
       account,
     })
   }, [contract, account, walletClient])

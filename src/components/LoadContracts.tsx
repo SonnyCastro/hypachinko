@@ -1,16 +1,16 @@
 "use client"
 
 import React, { useEffect, useCallback, useMemo } from "react"
-import { useWalletClient, useAccount, usePublicClient } from "wagmi"
+import { useWalletClient, usePublicClient } from "wagmi"
 import { getContract } from "viem"
 import { contractsAtom } from "../contexts/blockchain-atoms"
 import { CONTRACT_CONFIGS } from "../constants/contracts"
 import { useAtom } from "jotai"
+import { ContractsType } from "../types/contracts"
 
 const LoadContracts: React.FC = () => {
   const setContracts = useAtom(contractsAtom)[1]
   const { data: walletClient } = useWalletClient()
-  const { address: currentAccount } = useAccount()
   const publicClient = usePublicClient()
 
   // Memoize contract configs to prevent recreation
@@ -55,7 +55,7 @@ const LoadContracts: React.FC = () => {
 
       // Set contracts immediately without test call
       console.log("Smart Contracts Ready:", smartContracts)
-      setContracts(smartContracts)
+      setContracts(smartContracts as ContractsType)
     } catch (error) {
       console.error("Error loading contracts:", error)
     }

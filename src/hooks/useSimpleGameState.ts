@@ -22,7 +22,7 @@ export function useSimpleGameState(machineId?: string): BaseGameState & GameActi
   const contractCache = useContractDataCache()
   const userCache = useUserDataCache()
 
-  const [currentLotteryNFTAddress, setCurrentLotteryNFTAddress] = useState<string | null>(null)
+  const [currentLotteryNFTAddress] = useState<string | null>(null)
   const lotteryTicket = useLotteryTicketContract(currentLotteryNFTAddress || undefined)
 
   // Refs to prevent multiple simultaneous fetches
@@ -170,19 +170,20 @@ export function useSimpleGameState(machineId?: string): BaseGameState & GameActi
       const userPballsBalanceFormatted = formatUnits(userPballsBalance, 18)
 
       // Process marketplace data
-      const tokenIds = Array.isArray(ticketsForSale) ? ticketsForSale[0] || [] : ticketsForSale.tokenIds || []
-      const prices = Array.isArray(ticketsForSale) ? ticketsForSale[1] || [] : ticketsForSale.prices || []
+      const ticketsForSaleData = ticketsForSale as { tokenIds?: bigint[]; prices?: bigint[] } | [bigint[], bigint[]]
+      const tokenIds = Array.isArray(ticketsForSaleData) ? ticketsForSaleData[0] || [] : ticketsForSaleData.tokenIds || []
+      const prices = Array.isArray(ticketsForSaleData) ? ticketsForSaleData[1] || [] : ticketsForSaleData.prices || []
 
       const marketplaceListings: MarketplaceListing[] = tokenIds.map((tokenId: bigint, i: number) => ({
         tokenId: tokenId.toString(),
         price: formatUnits(BigInt(prices[i] || 0), 18),
-        seller: '',
+        owner: '',
       }))
 
       // Update all state at once
       setLotteryData(lotteryData)
       setPballsData(pballsData)
-      setUserTickets(userTickets)
+      setUserTickets(userTickets as bigint[])
       setUserBalance(userBalanceFormatted)
       setMarketplaceListings(marketplaceListings)
 
@@ -223,21 +224,21 @@ export function useSimpleGameState(machineId?: string): BaseGameState & GameActi
   ])
 
   // Individual fetch functions for backward compatibility (but they use the global fetch)
-  const fetchLotteryData = useCallback(async () => {
-    await fetchAllData()
-  }, [fetchAllData])
+  // const fetchLotteryData = useCallback(async () => {
+  //   await fetchAllData()
+  // }, [fetchAllData])
 
-  const fetchUserData = useCallback(async () => {
-    await fetchAllData()
-  }, [fetchAllData])
+  // const fetchUserData = useCallback(async () => {
+  //   await fetchAllData()
+  // }, [fetchAllData])
 
-  const fetchPballsData = useCallback(async () => {
-    await fetchAllData()
-  }, [fetchAllData])
+  // const fetchPballsData = useCallback(async () => {
+  //   await fetchAllData()
+  // }, [fetchAllData])
 
-  const fetchMarketplaceData = useCallback(async () => {
-    await fetchAllData()
-  }, [fetchAllData])
+  // const fetchMarketplaceData = useCallback(async () => {
+  //   await fetchAllData()
+  // }, [fetchAllData])
 
   // Buy ticket
   const buyTicket = useCallback(async () => {

@@ -11,9 +11,7 @@ import {
   HowItWorksSection,
   HypachinkoSection,
   MachineCard,
-  MachineGameInterface,
 } from "@/components/features/index"
-import ContractExample from "@/components/ContractExample"
 
 export function HomePage() {
   // Game state management

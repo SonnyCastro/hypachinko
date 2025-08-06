@@ -3,23 +3,18 @@
 import { useMemo } from "react"
 import { ASSETS } from "@/constants/assets"
 import { useMachinesState } from "@/hooks/useMachinesState"
-import { StatisticCard } from "@/components/features"
 import { getTokenData } from "@/constants/tokenData"
-import { formatCurrency } from "@/lib/utils"
 import { getSortedMachineIds, MachineId } from "@/constants/machines"
 import { LazyMachineCard } from "./LazyMachineCard"
+import { GameState } from "@/types/game"
 
 interface MachinesPageProps {
-  serverMachinesData?: Record<string, any>
-  serverAggregatedData?: any
+  serverMachinesData?: Record<string, unknown>
+  serverAggregatedData?: Record<string, unknown>
   serverError?: string | null
 }
 
-export function MachinesPage({
-  serverMachinesData,
-  serverAggregatedData,
-  serverError,
-}: MachinesPageProps) {
+export function MachinesPage({ serverError }: MachinesPageProps) {
   // Machine IDs - easy to add/remove machines
   const machineIds = useMemo(() => getSortedMachineIds(), [])
 
@@ -30,8 +25,6 @@ export function MachinesPage({
     handleMachinePercentageSelect,
     handleMachineBallCountChange,
     handleMachineBuyBalls,
-    isLoadingMachines,
-    getAggregatedData,
   } = useMachinesState(machineIds)
 
   // Memoized tokens array - using centralized tokenData
@@ -123,10 +116,7 @@ export function MachinesPage({
 
           {/* Machines Grid */}
           <div className='grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 w-full mt-4 sm:mt-6'>
-            {tokens.map((token: any) => {
-              // Use the optimized machine game state from the batched hook
-              const machineGameState = machineGameStates[token.id]
-
+            {tokens.map((token) => {
               return (
                 <LazyMachineCard
                   key={token.id}
@@ -141,18 +131,6 @@ export function MachinesPage({
                   onBallCountChange={(count: number) =>
                     handleMachineBallCountChange(token.id, count)
                   }
-                  gameState={machineGameState}
-                  onBuyTicket={async () => {
-                    try {
-                      await machineGameState.buyTicket()
-                      console.log(`Ticket purchased for ${token.id}!`)
-                    } catch (error) {
-                      console.error(
-                        `Failed to buy ticket for ${token.id}:`,
-                        error
-                      )
-                    }
-                  }}
                 />
               )
             })}

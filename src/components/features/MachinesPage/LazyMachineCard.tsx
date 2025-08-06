@@ -6,11 +6,7 @@ import { Skeleton } from "@/components/ui/Skeleton"
 const MachineCard = lazy(() =>
   import("../MachineCard").then((module) => ({ default: module.MachineCard }))
 )
-const MachineGameInterface = lazy(() =>
-  import("../MachineGameInterface").then((module) => ({
-    default: module.MachineGameInterface,
-  }))
-)
+// Removed unused MachineGameInterface import
 
 interface LazyMachineCardProps {
   machineId: MachineId
@@ -20,8 +16,6 @@ interface LazyMachineCardProps {
   onBuyBalls: () => void
   onPercentageSelect: (percentage: string) => void
   onBallCountChange: (count: number) => void
-  gameState: any
-  onBuyTicket: () => Promise<void>
 }
 
 // Skeleton for machine card
@@ -72,8 +66,6 @@ export function LazyMachineCard({
   onBuyBalls,
   onPercentageSelect,
   onBallCountChange,
-  gameState,
-  onBuyTicket,
 }: LazyMachineCardProps) {
   return (
     <Suspense fallback={<MachineCardSkeleton />}>

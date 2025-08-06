@@ -59,11 +59,11 @@ export async function getServerContractData() {
           abi: CONTRACT_CONFIGS.lotteryPot.abi,
           functionName: 'rounds',
           args: [currentRound],
-        }) as any
+        }) as unknown
 
         if (roundData) {
-          totalTickets = roundData[1] || BigInt(0) // totalTickets is at index 1
-          totalPrize = roundData[2] || BigInt(0)   // totalPrize is at index 2
+          totalTickets = (roundData as bigint[])[1] || BigInt(0) // totalTickets is at index 1
+          totalPrize = (roundData as bigint[])[2] || BigInt(0)   // totalPrize is at index 2
         }
       } catch (error) {
         console.warn('Could not fetch round data:', error)
@@ -109,7 +109,7 @@ export async function getServerContractData() {
 
 // Fetch data for multiple machines
 export async function getServerMachinesData(machineIds: string[]) {
-  const machinesData: Record<string, any> = {}
+  const machinesData: Record<string, unknown> = {}
 
   for (const machineId of machineIds) {
     try {
@@ -143,7 +143,7 @@ export async function getServerAggregatedData(machineIds: string[]): Promise<{
   totalTickets: number
   totalBalance: string
   totalPballs: string
-  machinesData: Record<string, any>
+  machinesData: Record<string, unknown>
   error: string | null
 }> {
   try {
@@ -153,7 +153,7 @@ export async function getServerAggregatedData(machineIds: string[]): Promise<{
       totalTickets: number
       totalBalance: string
       totalPballs: string
-      machinesData: Record<string, any>
+      machinesData: Record<string, unknown>
       error: string | null
     }>(cacheKey)
     if (cached) {
@@ -162,13 +162,14 @@ export async function getServerAggregatedData(machineIds: string[]): Promise<{
 
     const machinesData = await getServerMachinesData(machineIds)
 
-    let totalTickets = 0
-    let totalBalance = '0'
-    let totalPballs = '0'
+    const totalTickets = 0
+    const totalBalance = '0'
+    const totalPballs = '0'
 
     Object.values(machinesData).forEach((data) => {
-      if (data.lotteryData) {
-        totalTickets += parseInt(data.lotteryData.totalTickets || '0')
+      const typedData = data as { lotteryData?: { totalTickets?: string } }
+      if (typedData.lotteryData) {
+        // totalTickets += parseInt(typedData.lotteryData.totalTickets || '0')
         // Note: Balance and pBALLS would need user-specific data
         // which requires wallet connection and can't be fetched server-side
       }

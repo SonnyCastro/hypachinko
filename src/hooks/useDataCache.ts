@@ -12,8 +12,8 @@ interface PendingRequest<T> {
 }
 
 export function useDataCache() {
-  const cache = useRef<Map<string, CacheEntry<any>>>(new Map())
-  const pendingRequests = useRef<Map<string, PendingRequest<any>>>(new Map())
+  const cache = useRef<Map<string, CacheEntry<unknown>>>(new Map())
+  const pendingRequests = useRef<Map<string, PendingRequest<unknown>>>(new Map())
 
   const get = useCallback(<T>(key: string): T | null => {
     const entry = cache.current.get(key)
@@ -25,7 +25,7 @@ export function useDataCache() {
       return null
     }
 
-    return entry.data
+    return entry.data as T
   }, [])
 
   const set = useCallback(<T>(key: string, data: T, ttl: number = 5 * 60 * 1000): void => {
@@ -68,7 +68,7 @@ export function useDataCache() {
       const now = Date.now()
       // If pending request is recent (within 5 seconds), return it
       if (now - pending.timestamp < 5000) {
-        return pending.promise
+        return pending.promise as Promise<T>
       }
       // If too old, remove it
       pendingRequests.current.delete(key)

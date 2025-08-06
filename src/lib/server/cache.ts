@@ -1,5 +1,5 @@
 // Simple in-memory cache for server-side operations
-const cache = new Map<string, { data: any; timestamp: number; ttl: number }>()
+const cache = new Map<string, { data: unknown; timestamp: number; ttl: number }>()
 
 export function getCachedData<T>(key: string): T | null {
   const entry = cache.get(key)
@@ -11,7 +11,7 @@ export function getCachedData<T>(key: string): T | null {
     return null
   }
 
-  return entry.data
+  return entry.data as T
 }
 
 export function setCachedData<T>(key: string, data: T, ttl: number = 30000): void {

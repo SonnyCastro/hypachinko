@@ -2,18 +2,18 @@ import { type Address } from 'viem'
 
 export type Contract = {
   address: Address
-  abi: readonly any[]
+  abi: readonly unknown[]
   read: {
-    [key: string]: (...args: any[]) => Promise<any>
+    [key: string]: (...args: readonly unknown[]) => Promise<unknown>
   }
   write?: {
-    [key: string]: (...args: any[]) => Promise<any>
+    [key: string]: (...args: readonly unknown[]) => Promise<unknown>
   }
   estimateGas?: {
-    [key: string]: (...args: any[]) => Promise<any>
+    [key: string]: (...args: readonly unknown[]) => Promise<unknown>
   }
   simulate?: {
-    [key: string]: (...args: any[]) => Promise<any>
+    [key: string]: (...args: readonly unknown[]) => Promise<unknown>
   }
 }
 
@@ -25,7 +25,7 @@ export type ContractsType = {
 
 export type ContractInfoType = {
   address: Address
-  abi: readonly any[]
+  abi: readonly unknown[]
 }
 
 export type ContractsInfoType = {

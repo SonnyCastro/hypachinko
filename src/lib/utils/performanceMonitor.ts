@@ -5,7 +5,7 @@ interface PerformanceMetric {
   duration?: number
   success: boolean
   error?: string
-  metadata?: Record<string, any>
+  metadata?: Record<string, unknown>
 }
 
 class PerformanceMonitor {
@@ -13,7 +13,7 @@ class PerformanceMonitor {
   private activeMetrics = new Map<string, PerformanceMetric>()
   private readonly MAX_METRICS = 1000
 
-  startMetric(name: string, metadata?: Record<string, any>): string {
+  startMetric(name: string, metadata?: Record<string, unknown>): string {
     const id = `${name}_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
 
     const metric: PerformanceMetric = {

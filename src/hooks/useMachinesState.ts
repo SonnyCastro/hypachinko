@@ -2,6 +2,7 @@ import { useState, useCallback, useMemo } from 'react'
 import { useGameLogic } from './useGameLogic'
 import { useSimpleGameState } from './useSimpleGameState'
 import { MachineId } from '@/constants/machines'
+import { MachineGameState } from '@/types/game'
 
 // Machine state types
 interface MachineState {
@@ -107,7 +108,7 @@ export const useMachinesState = (machineIds: MachineId[]) => {
         refreshAllData: sharedGameState.refreshAllData,
       }
       return acc
-    }, {} as { [machineId: string]: any })
+    }, {} as { [machineId: string]: MachineGameState })
   }, [machineIds, sharedGameState])
 
   return {

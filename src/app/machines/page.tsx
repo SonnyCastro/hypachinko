@@ -11,7 +11,7 @@ async function MachinesPageContent() {
 
   return (
     <MachinesPage
-      serverMachinesData={result.machinesData}
+      serverMachinesData={result.machinesData as Record<string, unknown>}
       serverAggregatedData={{
         totalTickets: result.totalTickets,
         totalBalance: result.totalBalance,
