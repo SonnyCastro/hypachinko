@@ -4,6 +4,7 @@ import type React from "react"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { WagmiProvider } from "wagmi"
 import { RainbowKitProvider, Theme } from "@rainbow-me/rainbowkit"
+import { JotaiProvider } from "../components/JotaiProvider"
 import { config } from "../config/wagmi"
 import "@rainbow-me/rainbowkit/styles.css"
 
@@ -72,7 +73,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
     <WagmiProvider config={config}>
       <QueryClientProvider client={queryClient}>
         <RainbowKitProvider theme={hypachinkoTheme} modalSize='compact'>
-          {children}
+          <JotaiProvider>{children}</JotaiProvider>
         </RainbowKitProvider>
       </QueryClientProvider>
     </WagmiProvider>

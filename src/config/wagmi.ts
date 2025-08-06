@@ -1,37 +1,6 @@
 import { getDefaultConfig } from '@rainbow-me/rainbowkit';
-import {
-  Chain,
-} from '@rainbow-me/rainbowkit';
 import { env } from './env';
-
-const HyperEVM = {
-  id: 999,
-  name: 'HyperEVM',
-  iconUrl: 'https://s2.coinmarketcap.com/static/img/coins/64x64/32196.png',
-  iconBackground: '#fff',
-  nativeCurrency: { name: 'HYPE', symbol: 'HYPE', decimals: 18 },
-  rpcUrls: {
-    default: { http: ['https://rpc.hyperliquid.xyz/evm'] },
-  },
-  blockExplorers: {
-    default: { name: 'HyperEVMScan', url: 'https://hyperevmscan.io/' },
-  },
-} as const satisfies Chain;
-
-const HyperEVMTestnet = {
-  id: 998,
-  name: 'HyperEVM Testnet',
-  iconUrl: 'https://s2.coinmarketcap.com/static/img/coins/64x64/32196.png',
-  iconBackground: '#fff',
-  nativeCurrency: { name: 'HYPE', symbol: 'HYPE', decimals: 18 },
-  rpcUrls: {
-    default: { http: ['https://rpc.hyperliquid-testnet.xyz/evm'] },
-  },
-  blockExplorers: {
-    default: { name: 'HyperLiquid Testnet Explorer', url: 'https://app.hyperliquid-testnet.xyz/explorer' },
-  },
-} as const satisfies Chain;
-
+import { HyperEVM, HyperEVMTestnet } from './networks';
 
 export const config = getDefaultConfig({
   appName: 'Hypachinko',
@@ -41,4 +10,13 @@ export const config = getDefaultConfig({
     ...(env.ENABLE_TESTNETS ? [HyperEVMTestnet] : []),
   ],
   ssr: true,
+  // Wagmi createConfig options including multicall batching
+  batch: {
+    multicall: {
+      batchSize: 1024, // 1KB batch size
+      wait: 16, // 16ms wait time for batching
+    },
+  },
+  // Optional: Custom wallet list (uses default if not specified)
+  // wallets: [rainbowWallet, metaMaskWallet, coinbaseWallet],
 });
